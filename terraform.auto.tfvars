@@ -1,4 +1,4 @@
-org         = "gsk"
-ou          = "rnd"
+appname     = "app1"
 environment = "dev"
+department  = "emtech"
 location    = "uksouth"

@@ -1,51 +1,61 @@
-locals {
-  res_name   = "${var.assetname}-${var.environment}"
+
+##################################################################################
+# Key vault module
+##################################################################################
+
+resource "random_id" "server" {
+  byte_length = 2
 }
 
-########### KeyVault ###########
+locals {
+  unique_id = "${random_id.server.hex}"
+}
 
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_key_vault" "key_vault" {
-  name                        = local.res_name
-  location                    = var.location
-  resource_group_name         = var.resource_group_name
-  enabled_for_disk_encryption = true
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
-  soft_delete_retention_days  = 7
-  purge_protection_enabled    = var.purge_protection_enabled
-
-  enabled_for_deployment          = true
-  enabled_for_template_deployment = true
-
+resource "azurerm_key_vault" "shared_key_vault" {
+  name                = "${var.appname}-kv-${var.environment}-${local.unique_id}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  tenant_id           = var.key_vault_tenant_id
   sku_name = "standard"
+  soft_delete_retention_days = 7
 
   access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
+      tenant_id = data.azurerm_client_config.current.tenant_id
+      object_id = data.azurerm_client_config.current.object_id
 
-    key_permissions = [
-      "Get",
-    ]
+      key_permissions = [
+        "Get",
+        "List",
+        "Create",
+        "Delete",
+        "Purge",
+        "Recover"
+      ]
 
-    secret_permissions = [
-      "Get",
-      "Backup",
-      "Delete",
-      "List",
-      "Purge",
-      "Recover",
-      "Restore",
-      "Set"
-    ]
+      secret_permissions = [
+        "Get",
+        "List",
+        "Set",
+        "Delete",
+        "Purge",
+        "Recover"
+      ]
 
-    storage_permissions = [
-      "Get",
-    ]
+      certificate_permissions = [
+        "Get",
+        "List",
+        "Import",
+        "Delete",
+        "Purge",
+        "Recover"
+      ]
   }
 
-  tags = {
-    environment = var.environment
+  lifecycle {
+    ignore_changes = [
+      access_policy
+    ]
   }
-
 }

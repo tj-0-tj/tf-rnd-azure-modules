@@ -12,6 +12,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.0.2"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.1"
+    }
   }
 }
 
@@ -23,3 +27,6 @@ provider "azurerm" {
     }
   }
 }
+
+# Make client_id, tenant_id, subscription_id and object_id variables
+data "azurerm_client_config" "current" {}

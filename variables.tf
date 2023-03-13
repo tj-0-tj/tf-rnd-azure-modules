@@ -1,12 +1,12 @@
-variable "org" {
-  type = string
-}
-
-variable "ou" {
+variable "appname" {
   type = string
 }
 
 variable "environment" {
+  type = string
+}
+
+variable "department" {
   type = string
 }
 

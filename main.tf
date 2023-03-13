@@ -1,29 +1,36 @@
 locals {
-  org         = var.org
-  ou          = var.ou
   environment = var.environment
   location    = var.location
-  rg_name     = "${var.location}-${local.org}-${local.ou}-${local.environment}-rg-1"
 }
 
-########### Management ###########
+##################################################################################
+# RESOURCES
+##################################################################################
 
-resource "azurerm_resource_group" "resourcegroup" {
-  name     = local.rg_name
-  location = local.location
+resource "azurerm_resource_group" "shared" {
+  name     = "${var.appname}-shared-rg-${var.environment}"
+  location = var.location
+  tags = {
+    environment = var.environment
+    department  = var.department
+    appname     = var.appname
+  }
 }
 
-########### Secrets  ###########
+#############################
+# Secrets
+#############################
 
 module "key_vault" {
   source = "./modules/key_vault"
 
-  assetname           = "kv-ci-gh"
-  environment         = local.environment
-  location            = local.location
-  resource_group_name = azurerm_resource_group.resourcegroup.name
+  key_vault_tenant_id = data.azurerm_client_config.current.tenant_id
+  appname             = var.appname
+  environment         = var.environment
+  resource_group_name = azurerm_resource_group.shared.name
+  location            = azurerm_resource_group.shared.location
 
   depends_on = [
-    azurerm_resource_group.resourcegroup
+    azurerm_resource_group.shared
   ]
 }
