@@ -8,34 +8,43 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+jobs:
+- job: A
+  steps:
+  - task: TerraformInstaller@0
+    inputs:
+      terraformVersion: '1.4.2'
 
-steps:
-- task: TerraformInstaller@0
-  inputs:
-    terraformVersion: '1.4.2'
-- task: TerraformCLI@0
-  inputs:
-    command: 'init'
-    #secureVarsFile: 'secrets.conf'
-    backendType: 'azurerm'
-    backendServiceArm: 'sp-rnd-kv'
-    backendAzureRmSubscriptionId: '7eac40a0-6807-4898-9a66-fbe5bba26ace'
-    ensureBackend: true
-    backendAzureRmResourceGroupName: 'tfstate'
-    backendAzureRmResourceGroupLocation: 'uksouth'
-    backendAzureRmStorageAccountName: 'tfstate31235'
-    backendAzureRmContainerName: 'tfstate'
-    backendAzureRmKey: 'terraform.tfstate'
-    allowTelemetryCollection: false
-- task: TerraformCLI@0
-  inputs:
-    command: 'validate'
-    allowTelemetryCollection: false
+- job: B
+  steps:
+  - task: TerraformCLI@0
+    inputs:
+      command: 'init'
+      #secureVarsFile: 'secrets.conf'
+      backendType: 'azurerm'
+      backendServiceArm: 'sp-rnd-kv'
+      backendAzureRmSubscriptionId: '7eac40a0-6807-4898-9a66-fbe5bba26ace'
+      ensureBackend: true
+      backendAzureRmResourceGroupName: 'tfstate'
+      backendAzureRmResourceGroupLocation: 'uksouth'
+      backendAzureRmStorageAccountName: 'tfstate31235'
+      backendAzureRmContainerName: 'tfstate'
+      backendAzureRmKey: 'terraform.tfstate'
+      allowTelemetryCollection: false
 
-- task: TerraformCLI@0
-  displayName: Terraform plan
-  inputs:
-    command: 'plan'
-    environmentServiceName: 'sp-rnd-kv'
-    allowTelemetryCollection: false
-    commandOptions: ''
+- job: C
+  steps:
+  - task: TerraformCLI@0
+    inputs:
+      command: 'validate'
+      allowTelemetryCollection: false
+
+- job: D
+  steps:
+  - task: TerraformCLI@0
+    displayName: Terraform plan
+    inputs:
+      command: 'plan'
+      environmentServiceName: 'sp-rnd-kv'
+      allowTelemetryCollection: false
+      commandOptions: ''
