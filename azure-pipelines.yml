@@ -1,0 +1,41 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: '1.4.2'
+- task: TerraformCLI@0
+  inputs:
+    command: 'init'
+    #secureVarsFile: 'secrets.conf'
+    backendType: 'azurerm'
+    backendServiceArm: 'sp-rnd-kv'
+    backendAzureRmSubscriptionId: '7eac40a0-6807-4898-9a66-fbe5bba26ace'
+    ensureBackend: true
+    backendAzureRmResourceGroupName: 'tfstate'
+    backendAzureRmResourceGroupLocation: 'uksouth'
+    backendAzureRmStorageAccountName: 'tfstate31235'
+    backendAzureRmContainerName: 'tfstate'
+    backendAzureRmKey: 'terraform.tfstate'
+    allowTelemetryCollection: false
+- task: TerraformCLI@0
+  inputs:
+    command: 'validate'
+    allowTelemetryCollection: false
+
+- task: TerraformCLI@0
+  displayName: Terraform plan
+  inputs:
+    command: 'plan'
+    environmentServiceName: 'sp-rnd-kv'
+    allowTelemetryCollection: false
+    commandOptions: ''
