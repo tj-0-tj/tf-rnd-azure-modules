@@ -6,9 +6,6 @@ variable "ado_project_name" {
   type = string
 }
 
-variable "ado_sp_endpoint_id" {
-  type = string
-}
 
 variable "environment" {
   type = string
@@ -30,3 +27,19 @@ variable "secret_maps" {
   type    = map(string)
   default = {}
 }
+
+variable "keyvault_readonly_access_object_ids" {
+  type    = list(string)
+  default = []
+}
+
+variable "keyvault_admin_access_object_ids" {
+  type    = list(string)
+  default = []
+}
+
+variable "keyvault_devs_access_object_ids" {
+  type    = list(string)
+  default = []
+}
+

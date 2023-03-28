@@ -35,5 +35,5 @@ provider "azurerm" {
 # export AZDO_PERSONAL_ACCESS_TOKEN=xxxx
 # export AZDO_ORG_SERVICE_URL=https://dev.azure.com/tj0798
 provider "azuredevops" {
-  
+
 }
