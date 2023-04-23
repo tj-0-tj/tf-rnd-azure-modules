@@ -13,3 +13,4 @@ secret_maps = {
   "name2" = "value22"
   "name3" = "value33"
 }
+# https://www.mytechramblings.com/posts/how-to-bootstrap-terraform-and-azdo-to-start-deploying-iac-to-azure/

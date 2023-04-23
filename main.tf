@@ -108,8 +108,6 @@ resource "azurerm_key_vault_secret" "ci_secrets" {
 # ADO Variable Groups
 ##################################################################################
 
-
-
 resource "azuredevops_serviceendpoint_azurerm" "ci_service_endpoint" {
   project_id                = data.azuredevops_project.ado_project.id
   service_endpoint_name     = "gsk-rd-ci-${var.environment}"
