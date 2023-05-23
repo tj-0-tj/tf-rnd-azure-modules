@@ -39,7 +39,7 @@ jobs:
             echo "Azure resource group created"
           fi 
 
-          if $(az storage account exists --name ${{ env.TerraformBackendStorageAccount }}) ; then
+          if $(az storage account check-name --name ${{ env.TerraformBackendStorageAccount }}) ; then
             echo "Azure storage account already exists, skipping creation..."
           else
             az storage account create --name ${{ env.TerraformBackendStorageAccount }} --location ${{ env.RESOURCE_GROUP_LOCATION }}
