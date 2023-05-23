@@ -108,33 +108,33 @@ resource "azurerm_key_vault_secret" "ci_secrets" {
 # ADO Variable Groups
 ##################################################################################
 
-resource "azuredevops_serviceendpoint_azurerm" "ci_service_endpoint" {
-  project_id                = data.azuredevops_project.ado_project.id
-  service_endpoint_name     = "gsk-rd-ci-${var.environment}"
-  azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
-  azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
-  azurerm_subscription_name = data.azurerm_subscription.current.display_name
-}
+# resource "azuredevops_serviceendpoint_azurerm" "ci_service_endpoint" {
+#   project_id                = data.azuredevops_project.ado_project.id
+#   service_endpoint_name     = "gsk-rd-ci-${var.environment}"
+#   azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
+#   azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
+#   azurerm_subscription_name = data.azurerm_subscription.current.display_name
+# }
 
-resource "azuredevops_variable_group" "ci_vg" {
-  project_id   = data.azuredevops_project.ado_project.id
-  name         = "vg-ci-${var.department}-${var.environment}-${local.unique_id}"
-  description  = "CI Variable Group"
-  allow_access = true
+# resource "azuredevops_variable_group" "ci_vg" {
+#   project_id   = data.azuredevops_project.ado_project.id
+#   name         = "vg-ci-${var.department}-${var.environment}-${local.unique_id}"
+#   description  = "CI Variable Group"
+#   allow_access = true
 
-  key_vault {
-    name                = azurerm_key_vault.shared_key_vault.name
-    service_endpoint_id = azuredevops_serviceendpoint_azurerm.ci_service_endpoint.id
-  }
+#   key_vault {
+#     name                = azurerm_key_vault.shared_key_vault.name
+#     service_endpoint_id = azuredevops_serviceendpoint_azurerm.ci_service_endpoint.id
+#   }
 
-  dynamic "variable" {
-    for_each = var.secret_maps
-    content {
-      name = variable.key
-    }
-  }
-  depends_on = [
-    azurerm_key_vault_access_policy.readonly_access_policy,
-    azuredevops_serviceendpoint_azurerm.ci_service_endpoint
-  ]
-}
+#   dynamic "variable" {
+#     for_each = var.secret_maps
+#     content {
+#       name = variable.key
+#     }
+#   }
+#   depends_on = [
+#     azurerm_key_vault_access_policy.readonly_access_policy,
+#     azuredevops_serviceendpoint_azurerm.ci_service_endpoint
+#   ]
+# }

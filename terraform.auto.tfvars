@@ -1,7 +1,7 @@
 environment                         = "DevTest"
 department                          = "InnovationHub"
 location                            = "uksouth"
-resource_group_name                 = "tfstate"
+resource_group_name                 = "myrg"
 ado_vg_name                         = "RD-CI"
 ado_project_name                    = "CAIS"
 ci_service_principle                = "tj0798-CAIS-7eac40a0-6807-4898-9a66-fbe5bba26ace"
