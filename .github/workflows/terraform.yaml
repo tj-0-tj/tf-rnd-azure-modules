@@ -8,20 +8,47 @@ on:
         default: "apply"
 permissions:
   contents: read
-jobs:
-  terraform:
-    name: 'Terraform'
-    runs-on: ubuntu-latest
-    environment: dev
-    env:
+env:
       ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
+      RESOURCE_GROUP_LOCATION: "uksouth"
       TerraformBackendStorageAccount: "mystgacount"
       TerraformBackendResourceGroup: "myrg"
-      TerraformBackendStorageContainer: "state"           
-      
+      TerraformBackendStorageContainer: "state"  
+jobs:
+  azure_setup:
+    name: 'Azure Setup'
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - uses: azure/login@v1
+      with:
+        creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+    
+    - name: Create resource group
+      uses: Azure/CLI@v1
+      with:
+        inlineScript: |
+          #!/bin/bash
+          if $(az group exists --name ${{ env.TerraformBackendResourceGroup }}) ; then
+            echo "Azure resource group already exists, skipping creation..."
+          else
+            az group create --name ${{ env.TerraformBackendResourceGroup }} --location ${{ env.RESOURCE_GROUP_LOCATION }}
+            echo "Azure resource group created"
+          fi 
+    - uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az logout
+          az cache purge
+          az account clear
+
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: dev   
     defaults:
       run:
         shell: bash
