@@ -42,7 +42,7 @@ jobs:
           if $(az storage account check-name --name ${{ env.TerraformBackendStorageAccount }}) ; then
             echo "Azure storage account already exists, skipping creation..."
           else
-            az storage account create --name ${{ env.TerraformBackendStorageAccount }} --location ${{ env.RESOURCE_GROUP_LOCATION }}
+            az storage account create --name ${{ env.TerraformBackendStorageAccount }} --location ${{ env.RESOURCE_GROUP_LOCATION }} -g ${{ env.TerraformBackendResourceGroup }}
             echo "Azure storage account created"
             ACCOUNT_KEY=$(az storage account keys list --resource-group $TerraformBackendResourceGroup --account-name $TerraformBackendStorageAccount --query [0].value -o tsv)
             export ACCOUNT_KEY=$ACCOUNT_KEY
