@@ -81,14 +81,15 @@ jobs:
           terraform_version: 1.4.2
       - name: Terraform Init
         run: |
-            terraform init -backend-config="storage_account_name=$TerraformBackendStorageAccount" \ 
+            terraform init -input=false -backend-config="storage_account_name=$TerraformBackendStorageAccount" \ 
               -backend-config="container_name=$TerraformBackendStorageContainer" \  
               -backend-config="key=dev.tfstate" \  
               -backend-config="resource_group_name=$TerraformBackendResourceGroup" \  
-              -backend-config="subscription_id="$ARM_SUBSCRIPTION_ID" \
-              -backend-config='tenant_id="$ARM_TENANT_ID"' \
-              -backend-config='client_id="$ARM_CLIENT_ID"' \
-              -backend-config='client_secret="$ARM_CLIENT_SECRET"'
+              -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID" \
+              -backend-config="tenant_id=$ARM_TENANT_ID" \
+              -backend-config="client_id=$ARM_CLIENT_ID" \
+              -backend-config="client_secret=$ARM_CLIENT_SECRET"
+              
       - name: Terraform Plan
         run: terraform plan -out=plan.tfplan -input=false"
       - uses: actions/upload-artifact@v3
