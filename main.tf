@@ -24,7 +24,7 @@ resource "azurerm_key_vault" "shared_key_vault" {
 
 
 resource "azurerm_key_vault_access_policy" "admin_access_policy" {
-  for_each     = toset(concat(var.keyvault_admin_access_object_ids,[data.azurerm_client_config.current.object_id]))
+  for_each     = toset(concat(var.keyvault_admin_access_object_ids, [data.azurerm_client_config.current.object_id]))
   key_vault_id = azurerm_key_vault.shared_key_vault.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   object_id    = each.key
@@ -66,7 +66,7 @@ resource "azurerm_key_vault_access_policy" "devs_access_policy" {
 }
 
 resource "azurerm_key_vault_access_policy" "readonly_access_policy" {
-  for_each     = toset(concat(var.keyvault_readonly_access_object_ids,[data.azuread_service_principal.ci_service_principle.object_id]))
+  for_each     = toset(concat(var.keyvault_readonly_access_object_ids, [data.azuread_service_principal.ci_service_principle.object_id]))
   key_vault_id = azurerm_key_vault.shared_key_vault.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   object_id    = each.key
