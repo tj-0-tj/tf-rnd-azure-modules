@@ -95,9 +95,9 @@ jobs:
           path: plan.tfplan
           if-no-files-found: error
           retention-days: 5
-      # - name: Terraform Apply
-      #   if: ${{ inputs.TFAction == 'apply'}}  
-      #   run: terraform apply -input=false -auto-approve plan.tfplan
-      # - name: Terraform Destroy
-      #   if: ${{ inputs.TFAction == 'destroy' }} 
-      #   run: terraform destroy -input=false -auto-approve
+      - name: Terraform Apply
+        if: ${{ inputs.TFAction == 'apply'}}  
+        run: terraform apply -input=false -auto-approve plan.tfplan
+      - name: Terraform Destroy
+        if: ${{ inputs.TFAction == 'destroy' }} 
+        run: terraform destroy -input=false -auto-approve
