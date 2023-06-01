@@ -47,3 +47,16 @@ variable "ci_service_principle" {
   type = string
 }
 
+### aks
+
+variable "kubernetes_version" {
+  default = "1.26"
+}
+
+variable "appId" {
+  description = "Azure Kubernetes Service Cluster service principal"
+}
+
+variable "password" {
+  description = "Azure Kubernetes Service Cluster password"
+}

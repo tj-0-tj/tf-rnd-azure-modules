@@ -8,3 +8,7 @@ data "azurerm_client_config" "current" {}
 # data "azuread_service_principal" "ci_service_principle" {
 #   display_name = var.ci_service_principle
 # }
+
+data "azurerm_resource_group" "myrg" {
+  name = "myrg"
+}
