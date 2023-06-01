@@ -5,6 +5,6 @@ data "azuredevops_project" "ado_project" {
 data "azurerm_subscription" "current" {}
 data "azurerm_client_config" "current" {}
 
-data "azuread_service_principal" "ci_service_principle" {
-  display_name = var.ci_service_principle
-}
+# data "azuread_service_principal" "ci_service_principle" {
+#   display_name = var.ci_service_principle
+# }
