@@ -74,9 +74,7 @@ resource "azurerm_key_vault_access_policy" "readonly_access_policy" {
   secret_permissions = [
     "List", "Get"
   ]
-  depends_on = [
-    azuredevops_serviceendpoint_azurerm.ci_service_endpoint
-  ]
+
 }
 
 ##################################################################################

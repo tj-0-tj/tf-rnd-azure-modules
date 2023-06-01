@@ -43,3 +43,7 @@ variable "keyvault_devs_access_object_ids" {
   default = []
 }
 
+variable "ci_service_principle" {
+  type = string
+}
+
