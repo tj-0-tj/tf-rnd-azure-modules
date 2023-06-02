@@ -1,0 +1,31 @@
+name: Upgrade cluster node images
+
+on:
+  # schedule:
+  #   - cron: '0 3 */15 * *'
+  workflow_dispatch:
+    inputs:
+      RESOURCE_GROUP:
+        description: "RESOURCE GROUP"     
+        required: true
+        default: "myrg"
+      CLUSTER_NAME:
+        description: "CLUSTER NAME"     
+        required: true
+        default: "myrg"
+jobs:
+  upgrade-node:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+          
+      - name: Get upgrade node images
+        uses: azure/CLI@v1
+        with:
+          inlineScript: az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --output table
+
+      # Code for upgrading one or more node pools
