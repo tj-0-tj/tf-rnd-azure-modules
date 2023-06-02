@@ -70,6 +70,7 @@ jobs:
           az account clear
 
   terraform:
+    needs: azure_setup
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: dev   
