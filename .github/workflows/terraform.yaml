@@ -50,7 +50,7 @@ jobs:
             echo "Azure storage account created"
             ACCOUNT_KEY=$(az storage account keys list --resource-group $TerraformBackendResourceGroup --account-name $TerraformBackendStorageAccount --query [0].value -o tsv)
             export ACCOUNT_KEY=$ACCOUNT_KEY
-            echo "::set-output name=ACCOUNT_KEY::${ACCOUNT_KEY}"
+            echo "name=ACCOUNT_KEY::${ACCOUNT_KEY}" >> $GITHUB_OUTPUT
           fi 
 
           if $(az storage container exists --name ${{ env.TerraformBackendStorageContainer }}) ; then
