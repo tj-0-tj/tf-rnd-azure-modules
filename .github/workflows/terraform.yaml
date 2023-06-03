@@ -131,6 +131,7 @@ jobs:
               echo "yes";
           else
               git tag -a "k8s_$KUBERNETES_VERSION" -m "K8s version $KUBERNETES_VERSION"
+              git push origin --tags
           fi
 
           
