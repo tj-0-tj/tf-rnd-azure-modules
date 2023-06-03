@@ -73,7 +73,10 @@ jobs:
     needs: azure_setup
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: dev   
+    environment: dev  
+    permissions:
+      contents: write
+      pull-requests: write 
     defaults:
       run:
         shell: bash
@@ -133,7 +136,8 @@ jobs:
               git tag -a "k8s_$KUBERNETES_VERSION" -m "K8s version $KUBERNETES_VERSION"
               git push origin --tags
           fi
-
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           
           
 
