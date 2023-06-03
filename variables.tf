@@ -50,6 +50,7 @@ variable "ci_service_principle" {
 ### aks
 
 variable "kubernetes_version" {
+  type = string
   default = "1.25"
 }
 

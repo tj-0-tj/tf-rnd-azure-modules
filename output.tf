@@ -33,5 +33,5 @@ output "cluster_password" {
 }
 
 output "kubernetes_version" {
-  value = azurerm_kubernetes_cluster.kubernetes_version
+  value = azurerm_kubernetes_cluster.default.kubernetes_version
 }
