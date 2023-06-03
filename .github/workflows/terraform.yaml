@@ -128,7 +128,7 @@ jobs:
           if [[ `git tag -l k8s_$KUBERNETES_VERSION` == $k8s_$KUBERNETES_VERSION ]]; then
               echo "yes";
           else
-              git tag "k8s_$KUBERNETES_VERSION"
+              git tag -a "k8s_$KUBERNETES_VERSION" -m "K8s version $KUBERNETES_VERSION"
           fi
 
           
