@@ -84,6 +84,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.4.2
+          terraform_wrapper: false
       - name: Terraform Init
         run: |
             terraform init -input=false \
@@ -110,3 +111,8 @@ jobs:
       - name: Terraform Destroy
         if: ${{ inputs.TFAction == 'destroy' }} 
         run: terraform destroy -input=false -auto-approve
+      - name: Terraform Output
+        if: ${{ inputs.TFAction == 'apply'}}  
+        run: |
+          KUBERNETES_VERSION=$(terraform output kubernetes_version)
+          echo $KUBERNETES_VERSION
