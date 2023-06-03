@@ -111,8 +111,22 @@ jobs:
       - name: Terraform Destroy
         if: ${{ inputs.TFAction == 'destroy' }} 
         run: terraform destroy -input=false -auto-approve
-      - name: Terraform Output
+      
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  
         if: ${{ inputs.TFAction == 'apply'}}  
         run: |
           KUBERNETES_VERSION=$(terraform output kubernetes_version)
           echo $KUBERNETES_VERSION
+
+          if [[ `git tag -l k8s_$KUBERNETES_VERSION` == $k8s_$KUBERNETES_VERSION ]]; then
+              echo "yes";
+          else
+              git tag "k8s_$KUBERNETES_VERSION"
+          fi
+
+          
+          
+
+      
