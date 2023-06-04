@@ -12,7 +12,7 @@ on:
       CLUSTER_NAME:
         description: "CLUSTER NAME"     
         required: true
-        default: "myrg"
+        default: "usable-moray-aks"
 jobs:
   upgrade-node:
     runs-on: ubuntu-latest
