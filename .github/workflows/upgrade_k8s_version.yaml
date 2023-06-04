@@ -26,6 +26,7 @@ jobs:
       - name: Get upgrade versions images
         uses: azure/CLI@v1
         with:
+          azcliversion: 2.48.1
           inlineScript: | 
             az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --output table 
 
