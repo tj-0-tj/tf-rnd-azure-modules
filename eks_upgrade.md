@@ -52,11 +52,12 @@ az aks get-upgrades --resource-group myResourceGroup --name myAKSCluster --query
 
 if you want to get the current version of the cluster you can run:
 ```azurecli-interactive
-az aks get-upgrades --resource-group myrg --name usable-moray-aks --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }" | jq .current
+az aks get-upgrades --resource-group myrg --name usable-moray-aks --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.current"
 ```
+
 If you want to get last available upgrade use this:
 ```azurecli-interactive
-az aks get-upgrades --resource-group myrg --name usable-moray-aks --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }" | jq '.upgrades[-1]'
+az aks get-upgrades --resource-group myrg --name usable-moray-aks --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.upgrades[-1]"
 ```
 
 #### Upgrading cluster

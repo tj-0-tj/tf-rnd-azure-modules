@@ -29,8 +29,8 @@ jobs:
           azcliversion: 2.48.1
           inlineScript: | 
             az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --output table 
-
-            echo "TARGET_KUBERNETES_VERSION=`az aks get-upgrades --resource-group myrg --name usable-moray-aks --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }" | jq '.upgrades[-1]'`" >> $GITHUB_ENV
+            TARGET_KUBERNETES_VERSION=`az aks get-upgrades --resource-group myrg --name usable-moray-aks --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.upgrades[-1]"`
+            echo "TARGET_KUBERNETES_VERSION="$TARGET_KUBERNETES_VERSION" >> $GITHUB_ENV
 
             ehco "Target version is $TARGET_KUBERNETES_VERSION" 
             az logout
