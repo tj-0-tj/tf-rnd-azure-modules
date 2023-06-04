@@ -26,6 +26,13 @@ jobs:
       - name: Get upgrade versions images
         uses: azure/CLI@v1
         with:
-          inlineScript: az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --output table
+          inlineScript: | 
+            az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --output table 
 
+            echo "TARGET_KUBERNETES_VERSION=`az aks get-upgrades --resource-group myrg --name usable-moray-aks --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }" | jq '.upgrades[-1]'`" >> $GITHUB_ENV
+
+            ehco "Target version is $TARGET_KUBERNETES_VERSION" 
+            az logout
+            az cache purge
+            az account clear
       # Code for upgrading one or more node pools

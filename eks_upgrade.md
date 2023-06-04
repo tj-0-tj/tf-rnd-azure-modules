@@ -22,8 +22,15 @@ During the cluster upgrade process, AKS performs the following operations:
 - This process repeats until all nodes in the cluster have been upgraded.
 - At the end of the process, the last buffer node is deleted, maintaining the existing agent node count and zone balance.
 
-IMPORTANT
-Ensure that any PodDisruptionBudgets (PDBs) allow for at least one pod replica to be moved at a time otherwise the drain/evict operation will fail. If the drain operation fails, the upgrade operation will fail by design to ensure that the applications are not disrupted. Please correct what caused the operation to stop (incorrect PDBs, lack of quota, and so on) and re-try the operation.
+> [!IMPORTANT]
+> Ensure that any PodDisruptionBudgets (PDBs) allow for at least one pod replica to be moved at a time otherwise the drain/evict operation will fail. If the drain operation fails, the upgrade operation will fail by design to ensure that the applications are not disrupted. > > Please correct what caused the operation to stop (incorrect PDBs, lack of quota, and so on) and re-try the operation.
+
+> [!IMPORTANT]
+>
+> Node surges require subscription quota for the requested max surge count for each upgrade operation. For example, a cluster that has five node pools, each with a count of four nodes, has a total of 20 nodes. If each node pool has a max surge value of 50%, additional compute and IP quota of 10 nodes (2 nodes * 5 pools) is required to complete the upgrade.
+>
+> The max surge setting on a node pool is persistent.  Subsequent Kubernetes upgrades or node version upgrades will use this setting. You may change the max surge value for your node pools at any time. For production node pools, the recommended max-surge setting is 33%.
+>
 
 #### Check available versions
 To find details of available aks upgrades:
@@ -39,9 +46,22 @@ You can check which Kubernetes releases are available for your cluster using the
 az aks get-upgrades --resource-group myResourceGroup --name myAKSCluster --output table
 ```
 
+```azurecli-interactive
+az aks get-upgrades --resource-group myResourceGroup --name myAKSCluster --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades }"
+```
+
+if you want to get the current version of the cluster you can run:
+```azurecli-interactive
+az aks get-upgrades --resource-group myrg --name usable-moray-aks --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }" | jq .current
+```
+If you want to get last available upgrade use this:
+```azurecli-interactive
+az aks get-upgrades --resource-group myrg --name usable-moray-aks --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }" | jq '.upgrades[-1]'
+```
+
 #### Upgrading cluster
 
-- Upgrade the cluster using the "az aks upgrade" command
+- Upgrade the cluster using the "az aks upgrade" command this will do control plane and cluster
     ```azurecli-interactive
     az aks upgrade \
         --resource-group myResourceGroup \
@@ -53,6 +73,24 @@ az aks get-upgrades --resource-group myResourceGroup --name myAKSCluster --outpu
     ```azurecli-interactive
     az aks show --resource-group myResourceGroup --name myAKSCluster --output table
     ```
+
+##### Upgrade control plane only then cluster
+
+    ```azurecli-interactive
+    az aks upgrade \
+    --resource-group <RG name> \
+    --name <AKS cluster name> \
+    --kubernetes-version <target K8s version> \ 
+    --control-plane-only
+    ```
+Finally, we could upgrade AKS cluster with
+  ```azurecli-interactive
+    az aks upgrade \
+    --resource-group <RG name> \
+    --name <AKS cluster name> \
+    --kubernetes-version <target K8s version>
+    ```
+
 
 ##### View the upgrade events
 
