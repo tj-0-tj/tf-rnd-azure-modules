@@ -32,9 +32,10 @@ jobs:
 
             #TARGET_KUBERNETES_VERSION=`az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.upgrades[-1]' -o tsv`
             az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.upgrades[-1]' -o tsv
-            #echo "TARGET_KUBERNETES_VERSION="$?" >> $GITHUB_ENV
 
-            ehco "Target version is $TARGET_KUBERNETES_VERSION" 
+            echo "TARGET_KUBERNETES_VERSION=`az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.upgrades[-1]' -o tsv`" >> $GITHUB_ENV
+
+            echo "Target version is $TARGET_KUBERNETES_VERSION" 
             az logout
             az cache purge
             az account clear
