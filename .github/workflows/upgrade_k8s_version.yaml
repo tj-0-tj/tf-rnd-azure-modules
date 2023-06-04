@@ -29,8 +29,8 @@ jobs:
           azcliversion: 2.48.1
           inlineScript: | 
             az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --output table 
-            
-            TARGET_KUBERNETES_VERSION=$(echo -n | az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.upgrades[-1]')
+
+            TARGET_KUBERNETES_VERSION=$(az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.upgrades[-1]' --output tsv)
             echo "TARGET_KUBERNETES_VERSION="$TARGET_KUBERNETES_VERSION" >> $GITHUB_ENV
 
             ehco "Target version is $TARGET_KUBERNETES_VERSION" 
