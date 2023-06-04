@@ -129,10 +129,13 @@ jobs:
         run: |
           git config --global user.name "TJ"
           git config --global user.email "tj@tjemail.com"
+          echo "CURRENT_KUBERNETES_VERSION=${GITHUB_REF#refs/tags/k8s_*/}" >> $GITHUB_ENV
 
-          if [[ `git tag -l k8s_$KUBERNETES_VERSION` == $k8s_$KUBERNETES_VERSION ]]; then
-              echo "yes";
+          TAG_EXISTS=`git tag -l k8s_$KUBERNETES_VERSION`
+          if [[ "$TAG_EXISTS" == "k8s_$KUBERNETES_VERSION" ]]; then
+              echo "Tag k8s_$KUBERNETES_VERSION already set!";
           else
+              echo "Tagging with k8s_$KUBERNETES_VERSION";
               git tag -a "k8s_$KUBERNETES_VERSION" -m "K8s version $KUBERNETES_VERSION"
               git push origin --tags
           fi
