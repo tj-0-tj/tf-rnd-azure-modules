@@ -145,3 +145,17 @@ az aks nodepool add -n mynodepool -g MyResourceGroup --cluster-name MyManagedClu
 # Update max surge for an existing node pool 
 az aks nodepool update -n mynodepool -g MyResourceGroup --cluster-name MyManagedCluster --max-surge 5
 ```
+
+## Further details 
+
+To stay within a supported Kubernetes version, you usually have to upgrade your cluster at least once per year and prepare for all possible disruptions. These disruptions include ones caused by API breaking changes, deprecations, and dependencies such as Helm and CSI. It can be difficult to anticipate these disruptions and migrate critical workloads without experiencing any downtime.
+
+AKS now automatically stops upgrade operations consisting of a minor version change if deprecated APIs are detected. This feature alerts you with an error message if it detects usage of APIs that are deprecated in the targeted version.
+
+All of the following criteria must be met in order for the stop to occur:
+
+- The upgrade operation is a Kubernetes minor version change for the cluster control plane.
+- The Kubernetes version you're upgrading to is 1.26 or later
+- If performed via REST, the upgrade operation uses a preview API version of 2023-01-02-preview or later.
+- If performed via Azure CLI, the aks-preview CLI extension 0.5.134 or later must be installed.
+- The last seen usage of deprecated APIs for the targeted version you're upgrading to must occur within 12 hours before the upgrade operation. AKS records usage hourly, so any usage of deprecated APIs within one hour isn't guaranteed to appear in the detection.
