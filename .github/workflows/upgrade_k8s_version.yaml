@@ -55,6 +55,19 @@ jobs:
             echo "Target version is: $CURRENT_KUBERNETES_VERSION"
             echo "Target version is: $TARGET_KUBERNETES_VERSION"
 
+      - name: Update TF code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: CER_K8S_Upgrade
+        run: |
+          date > generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "generated"
+          git push
+
       - name: Cleanup
         uses: azure/CLI@v1
         with:
