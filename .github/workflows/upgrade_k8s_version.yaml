@@ -30,7 +30,7 @@ jobs:
           inlineScript: | 
             az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --output table 
 
-            CURRENT_KUBERNETES_VERSION=`az aks get-upgrades --resource-group myrg --name usable-moray-aks --query "{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.current" -o tsv`
+            CURRENT_KUBERNETES_VERSION=`az aks get-upgrades --resource-group myrg --name usable-moray-aks --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.current' -o tsv`
             TARGET_KUBERNETES_VERSION=`az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.upgrades[-1]' -o tsv`
             
             #CURRENT_NODEPOOL_VERSION=`az aks nodepool get-upgrades --resource-group myrg --cluster-name usable-moray-aks --nodepool-name default --query "{kubernetesVersion}.current" -o tsv`
