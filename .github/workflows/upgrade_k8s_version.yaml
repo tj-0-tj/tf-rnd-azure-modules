@@ -37,7 +37,13 @@ jobs:
             echo "TARGET_KUBERNETES_VERSION=$TARGET_KUBERNETES_VERSION" >> $GITHUB_ENV
             echo "Target version is: $TARGET_KUBERNETES_VERSION"
 
-            az aks upgrade --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --kubernetes-version ${{ env.TARGET_KUBERNETES_VERSION }}
+      - name: Upgrade
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.48.1
+          inlineScript: | 
+            echo "Target version is: $TARGET_KUBERNETES_VERSION"
+            az aks upgrade --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --kubernetes-version $TARGET_KUBERNETES_VERSION
 
             az logout
             az cache purge
