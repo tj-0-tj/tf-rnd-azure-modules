@@ -38,7 +38,7 @@ jobs:
             echo "Target version is: $TARGET_KUBERNETES_VERSION"
 
       - name: Upgrade Control Plane
-        if: ${{ env.TARGET_KUBERNETES_VERSION != "" && env.CURRENT_KUBERNETES_VERSION != env.TARGET_KUBERNETES_VERSION }}
+        if: ${{ env.TARGET_KUBERNETES_VERSION != "" }} && ${{ env.CURRENT_KUBERNETES_VERSION != env.TARGET_KUBERNETES_VERSION }}
         uses: azure/CLI@v1
         with:
           azcliversion: 2.48.1
