@@ -69,7 +69,8 @@ jobs:
           
           git push --set-upstream origin "K8s/Upgrade_v${{ env.CURRENT_KUBERNETES_VERSION }}"
           gh pr create --title "Upgrade K8s Version" --body "Upgrade K8s Version $CURRENT_KUBERNETES_VERSION"
-
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Cleanup
         uses: azure/CLI@v1
         with:
