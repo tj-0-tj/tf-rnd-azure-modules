@@ -60,12 +60,14 @@ jobs:
         with:
           fetch-depth: 0
       - run: |
+          git checkout -b "K8s/Upgrade_v$TARGET_KUBERNETES_VERSION"
           date > generated.txt
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
           git commit -m "generated"
           git push
+          gh pr create --title "Upgrade K8s Version" --body "Upgrade K8s Version $CURRENT_KUBERNETES_VERSION"
 
       - name: Cleanup
         uses: azure/CLI@v1
