@@ -21,6 +21,7 @@ env:
     TerraformBackendStorageContainer: "state"
     TF_VAR_appId: ${{ secrets.APP_ID }}
     TF_VAR_password: ${{ secrets.APP_PWD }}
+    TF_VAR_secret_maps: ${{ secrets.secret_maps }}
 jobs:
   azure_setup:
     name: 'Azure Setup'

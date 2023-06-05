@@ -68,7 +68,7 @@ jobs:
           git commit -m "generated"
           
           git push --set-upstream origin "K8s/Upgrade_v${{ env.CURRENT_KUBERNETES_VERSION }}"
-          gh pr create --title "Upgrade K8s Version" --body "Upgrade K8s Version $CURRENT_KUBERNETES_VERSION"
+          gh pr create --title "Upgrade K8s Version" --body "Upgrade K8s Version $CURRENT_KUBERNETES_VERSION" -l "Upgrade"
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Cleanup
