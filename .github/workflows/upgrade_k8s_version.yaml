@@ -60,7 +60,7 @@ jobs:
         with:
           fetch-depth: 0
       - run: |
-          git checkout -b "K8s/Upgrade_v$TARGET_KUBERNETES_VERSION"
+          git checkout -b "K8s/Upgrade_v${{ env.CURRENT_KUBERNETES_VERSION }}"
           date > generated.txt
           git config user.name github-actions
           git config user.email github-actions@github.com
