@@ -61,7 +61,8 @@ jobs:
           fetch-depth: 0
       - run: |
           git checkout -b "K8s/Upgrade_v${{ env.CURRENT_KUBERNETES_VERSION }}"
-          date > generated.txt
+          sed -i "" "s/kubernetes_version = \"1.25\"/kubernetes_version = \"${{ env.CURRENT_KUBERNETES_VERSION }}\"/g" terraform.auto.tfvars
+
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
