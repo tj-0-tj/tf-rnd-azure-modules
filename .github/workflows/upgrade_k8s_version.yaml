@@ -26,7 +26,7 @@ jobs:
       - name: Get upgrade versions images
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.48.1
+          azcliversion: 2.49.0
           inlineScript: |
             CURRENT_KUBERNETES_VERSION=`az aks get-upgrades --resource-group myrg --name usable-moray-aks --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.current' -o tsv`
             TARGET_KUBERNETES_VERSION=`az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.upgrades[-1]' -o tsv`
@@ -41,7 +41,7 @@ jobs:
         if: env.CURRENT_KUBERNETES_VERSION != env.TARGET_KUBERNETES_VERSION && env.TARGET_KUBERNETES_VERSION != null
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.48.1
+          azcliversion: 2.49.0
           inlineScript: | 
             echo "Target version is: $CURRENT_KUBERNETES_VERSION"
             echo "Target version is: $TARGET_KUBERNETES_VERSION"
@@ -50,7 +50,7 @@ jobs:
       - name: Upgrade Node Pools
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.48.1
+          azcliversion: 2.49.0
           inlineScript: | 
             echo "Target version is: $CURRENT_KUBERNETES_VERSION"
             echo "Target version is: $TARGET_KUBERNETES_VERSION"
@@ -58,7 +58,7 @@ jobs:
       - name: Cleanup
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.48.1
+          azcliversion: 2.49.0
           inlineScript: | 
             az logout
             az cache purge
