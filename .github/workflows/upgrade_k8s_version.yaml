@@ -66,7 +66,8 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "generated"
-          git push
+          
+          git push --set-upstream origin "K8s/Upgrade_v${{ env.CURRENT_KUBERNETES_VERSION }}"
           gh pr create --title "Upgrade K8s Version" --body "Upgrade K8s Version $CURRENT_KUBERNETES_VERSION"
 
       - name: Cleanup
