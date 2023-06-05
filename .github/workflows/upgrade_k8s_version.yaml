@@ -43,7 +43,7 @@ jobs:
           azcliversion: 2.48.1
           inlineScript: | 
             echo "Target version is: $TARGET_KUBERNETES_VERSION"
-            az aks upgrade --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --kubernetes-version $TARGET_KUBERNETES_VERSION
+            az aks upgrade --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --kubernetes-version "$TARGET_KUBERNETES_VERSION"
 
             az logout
             az cache purge
