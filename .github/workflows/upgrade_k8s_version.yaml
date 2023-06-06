@@ -45,7 +45,7 @@ jobs:
           inlineScript: | 
             echo "Target version is: $CURRENT_KUBERNETES_VERSION"
             echo "Target version is: $TARGET_KUBERNETES_VERSION"
-            az aks upgrade --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --kubernetes-version ${{ env.TARGET_KUBERNETES_VERSION }} --control-plane-only --yes
+            az aks upgrade --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --kubernetes-version ${{ env.TARGET_KUBERNETES_VERSION }} --yes
 
       - name: Upgrade Node Pools
         uses: azure/CLI@v1
@@ -61,15 +61,15 @@ jobs:
           fetch-depth: 0
       - run: |
           git checkout -b "K8s/Upgrade_v${{ env.CURRENT_KUBERNETES_VERSION }}"
-          sed -i "s/kubernetes_version = \"1.25\"/kubernetes_version = \"${{ env.CURRENT_KUBERNETES_VERSION }}\"/g" terraform.auto.tfvars
+          sed -i "s/kubernetes_version = \"${{ env.CURRENT_KUBERNETES_VERSION }}\"/kubernetes_version = \"${{ env.TARGET_KUBERNETES_VERSION }}\"/g" terraform.auto.tfvars
 
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
           git commit -m "generated"
           
-          git push --set-upstream origin "K8s/Upgrade_v${{ env.CURRENT_KUBERNETES_VERSION }}"
-          gh pr create --title "Upgrade K8s Version" --body "Upgrade K8s Version $CURRENT_KUBERNETES_VERSION" 
+          git push --set-upstream origin "K8s/Upgrade_v${{ env.TARGET_KUBERNETES_VERSION }}"
+          gh pr create --title "Upgrade K8s Version" --body "Upgrade K8s Version $TARGET_KUBERNETES_VERSION" 
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Cleanup
