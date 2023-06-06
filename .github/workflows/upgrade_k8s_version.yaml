@@ -60,7 +60,7 @@ jobs:
         with:
           fetch-depth: 0
       - run: |
-          git checkout -b "K8s/Upgrade_v${{ env.CURRENT_KUBERNETES_VERSION }}"
+          git checkout -b "K8s/Upgrade_v${{ env.TARGET_KUBERNETES_VERSION }}"
           sed -i "s/kubernetes_version = \"${{ env.CURRENT_KUBERNETES_VERSION }}\"/kubernetes_version = \"${{ env.TARGET_KUBERNETES_VERSION }}\"/g" terraform.auto.tfvars
 
           git config user.name github-actions
