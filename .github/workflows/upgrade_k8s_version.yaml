@@ -37,23 +37,23 @@ jobs:
             echo "Target version is: $CURRENT_KUBERNETES_VERSION"
             echo "Target version is: $TARGET_KUBERNETES_VERSION"
 
-      - name: Upgrade Control Plane
-        if: env.CURRENT_KUBERNETES_VERSION != env.TARGET_KUBERNETES_VERSION && env.TARGET_KUBERNETES_VERSION != null
-        uses: azure/CLI@v1
-        with:
-          azcliversion: 2.49.0
-          inlineScript: | 
-            echo "Target version is: $CURRENT_KUBERNETES_VERSION"
-            echo "Target version is: $TARGET_KUBERNETES_VERSION"
-            az aks upgrade --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --kubernetes-version ${{ env.TARGET_KUBERNETES_VERSION }} --yes
+      # - name: Upgrade Control Plane
+      #   if: env.CURRENT_KUBERNETES_VERSION != env.TARGET_KUBERNETES_VERSION && env.TARGET_KUBERNETES_VERSION != null
+      #   uses: azure/CLI@v1
+      #   with:
+      #     azcliversion: 2.49.0
+      #     inlineScript: | 
+      #       echo "Target version is: $CURRENT_KUBERNETES_VERSION"
+      #       echo "Target version is: $TARGET_KUBERNETES_VERSION"
+      #       az aks upgrade --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --kubernetes-version ${{ env.TARGET_KUBERNETES_VERSION }} --yes
 
-      - name: Upgrade Node Pools
-        uses: azure/CLI@v1
-        with:
-          azcliversion: 2.49.0
-          inlineScript: | 
-            echo "Target version is: $CURRENT_KUBERNETES_VERSION"
-            echo "Target version is: $TARGET_KUBERNETES_VERSION"
+      # - name: Upgrade Node Pools
+      #   uses: azure/CLI@v1
+      #   with:
+      #     azcliversion: 2.49.0
+      #     inlineScript: | 
+      #       echo "Target version is: $CURRENT_KUBERNETES_VERSION"
+      #       echo "Target version is: $TARGET_KUBERNETES_VERSION"
 
       - name: Update TF code
         uses: actions/checkout@v3
