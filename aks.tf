@@ -13,6 +13,7 @@ resource "azurerm_kubernetes_cluster" "default" {
     node_count      = 2
     vm_size         = "Standard_B2s"
     os_disk_size_gb = 30
+    orchestrator_version = var.kubernetes_version
   }
 
   service_principal {
