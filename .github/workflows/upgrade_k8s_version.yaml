@@ -28,7 +28,7 @@ jobs:
         with:
           azcliversion: 2.49.0
           inlineScript: |
-            CURRENT_KUBERNETES_VERSION=`az aks get-upgrades --resource-group myrg --name usable-moray-aks --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.current' -o tsv`
+            CURRENT_KUBERNETES_VERSION=`az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.current' -o tsv`
             TARGET_KUBERNETES_VERSION=`az aks get-upgrades --resource-group ${{ inputs.RESOURCE_GROUP }} --name ${{ inputs.CLUSTER_NAME }} --query '{ current: controlPlaneProfile.kubernetesVersion,upgrades: controlPlaneProfile.upgrades[].kubernetesVersion }.upgrades[-1]' -o tsv`
             
             echo "CURRENT_KUBERNETES_VERSION=$CURRENT_KUBERNETES_VERSION" >> $GITHUB_ENV
