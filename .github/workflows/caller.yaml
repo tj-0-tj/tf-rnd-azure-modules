@@ -30,8 +30,7 @@ jobs:
     with:
       username: TJ-A
       TEST_ENV: ${{ needs.expose_env_vars.outputs.TEST_ENV }}
-    secrets:
-      token: ${{ secrets.TOKEN }}
+    secrets: inherit
 
   call-workflow-B:
     needs: expose_env_vars
@@ -41,5 +40,5 @@ jobs:
         env: ["dev"]
     with:
       username: TJ-B
-    secrets:
-      token: ${{ secrets.TOKEN }}
+    secrets: inherit
+      
