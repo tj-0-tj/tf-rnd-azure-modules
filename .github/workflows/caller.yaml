@@ -13,8 +13,9 @@ env:
 jobs:
   expose_env_vars:
     #runs-on: ubuntu-latest
-    matrix:
-      env: ["dev"]
+    strategy:
+      matrix:
+        env: ["dev"]
     outputs:
       TEST_ENV: ${{ vars.TEST_ENV }}
     steps:
@@ -22,8 +23,9 @@ jobs:
   call-workflow-A:
     needs: expose_env_vars
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/called.yaml@main
-    matrix:
-      env: ["dev"]
+    strategy:
+      matrix:
+        env: ["dev"]
     with:
       username: TJ
     secrets:
@@ -32,8 +34,9 @@ jobs:
   call-workflow-B:
     needs: expose_env_vars
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/called.yaml@main
-    matrix:
-      env: ["dev"]
+    strategy:
+      matrix:
+        env: ["dev"]
     with:
       username: TJ-B
     secrets:
