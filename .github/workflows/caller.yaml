@@ -12,7 +12,7 @@ env:
   ENV1: "ENV1"
 jobs:
   expose_env_vars:
-    #runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         env: ["dev"]
@@ -20,7 +20,7 @@ jobs:
       TEST_ENV: ${{ vars.TEST_ENV }}
     steps:
       - run: echo "Exposing env vars"
-      
+
   call-workflow-A:
     needs: expose_env_vars
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/called.yaml@main
