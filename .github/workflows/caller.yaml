@@ -28,7 +28,8 @@ jobs:
       matrix:
         env: ["dev"]
     with:
-      username: TJ
+      username: TJ-A
+      TEST_ENV: ${{ needs.expose_env_vars.outputs.TEST_ENV }}
     secrets:
       token: ${{ secrets.TOKEN }}
 
