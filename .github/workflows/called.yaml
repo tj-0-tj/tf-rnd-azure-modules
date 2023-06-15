@@ -18,3 +18,4 @@ jobs:
         run: |
           echo Hello input: ${{ inputs.username }}
           echo Hello env: ${{ env.ENV1 }}
+          echo Hello dev env: ${{ env.TEST_ENV }}

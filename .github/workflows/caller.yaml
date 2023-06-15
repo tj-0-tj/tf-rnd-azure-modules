@@ -11,8 +11,15 @@ on:
 env:
   ENV1: "ENV1"
 jobs:
+  expose_env_vars:
+    matrix:
+      env: ["dev"]
+    outputs:
+      TEST_ENV: ${{ vars.TEST_ENV }}
   call-workflow-A:
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/called.yaml@main
+    matrix:
+      env: ["dev"]
     with:
       username: TJ
     secrets:
@@ -20,6 +27,8 @@ jobs:
 
   call-workflow-B:
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/called.yaml@main
+    matrix:
+      env: ["dev"]
     with:
       username: TJ-B
     secrets:
