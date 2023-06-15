@@ -1,0 +1,26 @@
+name: 080-resusable-workflow-caller
+
+on:
+  push:
+    branches: none # [ main ]
+  pull_request:
+    branches: none # [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+env:
+  ENV1: "ENV1"
+jobs:
+  call-workflow-A:
+    uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/called.yaml@main
+    with:
+      username: TJ
+    secrets:
+      token: ${{ secrets.TOKEN }}
+
+  call-workflow-B:
+    uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/called.yaml@main
+    with:
+      username: TJ-B
+    secrets:
+      token: ${{ secrets.TOKEN }}
