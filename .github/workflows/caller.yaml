@@ -19,7 +19,8 @@ jobs:
     outputs:
       TEST_ENV: ${{ vars.TEST_ENV }}
     steps:
-      - run: "Exposing env vars"
+      - run: echo "Exposing env vars"
+      
   call-workflow-A:
     needs: expose_env_vars
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/called.yaml@main
