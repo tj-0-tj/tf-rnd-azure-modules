@@ -3,6 +3,7 @@ on:
 
 jobs:
   set_env_vars:
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     strategy:
