@@ -7,12 +7,13 @@ env:
 
 jobs:
   call_reusable:
-    runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         env: ["dev"]
-    steps:
-      - name: Checkout Code
-        uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
-        with:
-          env_vars: ${{ secrets.TEST }}
+
+    uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
+    with:
+      env_vars: ${{ secrets.TEST }}
+    secrets: inherit
