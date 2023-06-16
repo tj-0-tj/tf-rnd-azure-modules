@@ -12,21 +12,9 @@ jobs:
         env: ["dev"]
     outputs:
       SECRET_MAP: "testing"
-      env_var: ${{vars.TEST_ENV}}
+      env_var: ${{ env.TEST_ENV }}
     steps:
-      - run: echo ${{secrets.TEST }} | sed 's/./& /g'
-
-  check_envs:
-    runs-on: ubuntu-latest
-    needs: set_env_vars
-    permissions:
-      contents: read
-      actions: read
-    strategy:
-      matrix:
-        env: ["dev"]
-    steps:
-      - run: echo "This is : ${{ needs.set_env_vars.outputs.SECRET_MAP }}"
+      - run: echo "Set secrets"
 
   call_reusable:
     needs: set_env_vars
