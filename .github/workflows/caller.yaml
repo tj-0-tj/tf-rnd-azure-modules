@@ -12,7 +12,18 @@ jobs:
     outputs:
       SECRET_MAP: ${{ secrets.TEST }}
     steps:
-      - run: printenv
+      - run: echo ${{ secrets.TEST }}
+
+  check_envs:
+    runs-on: ubuntu-latest
+    needs: set_env_vars
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        env: ["dev"]
+    steps:
+      - run: echo ${{ needs.set_env_vars.outputs.SECRET_MAP }}
 
   # call_reusable:
   #   permissions:
