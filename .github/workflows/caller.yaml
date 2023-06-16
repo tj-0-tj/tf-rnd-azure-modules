@@ -1,18 +1,27 @@
 on:
   workflow_dispatch:
 
-env:
-  SOME_VAR: "foo"
-  ANOTHER_VAR: "bar"
-
 jobs:
-  call_reusable:
+  set_env_vars:
     permissions:
       contents: read
     strategy:
       matrix:
         env: ["dev"]
-    uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
-    with:
-      config-path: .github/labeler.yml
-    secrets: inherit
+    outputs:
+      SECRET_MAP: ${{ secrets.TEST }}
+    steps:
+      - run: |
+        echo "Vars:"
+        printenv
+
+  # call_reusable:
+  #   permissions:
+  #     contents: read
+  #   strategy:
+  #     matrix:
+  #       env: ["dev"]
+  #   uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
+  #   with:
+  #     config-path: .github/labeler.yml
+  #   secrets: inherit
