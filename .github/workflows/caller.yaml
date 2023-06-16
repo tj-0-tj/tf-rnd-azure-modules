@@ -7,9 +7,9 @@ env:
 
 jobs:
   call_reusable:
-    environment: dev
-    steps:
-      - name: call reusable
-        uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
-        with:
-          env_vars: ${{ toJson(env) }}
+    strategy:
+      matrix:
+        env: ["dev"]
+    uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
+    with:
+      env_vars: ${{ toJson(env) }}
