@@ -6,7 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      secrets: read
     strategy:
       matrix:
         env: ["dev"]
