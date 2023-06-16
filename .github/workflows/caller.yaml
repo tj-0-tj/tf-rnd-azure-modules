@@ -5,7 +5,6 @@ jobs:
   call_reusable:
     runs-on: ubuntu-latest
     environment: dev
-    steps:
-    - uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
-      with:
-        env_vars: ${{ toJson(env) }}
+    uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
+    with:
+      env_vars: ${{ toJson(env) }}
