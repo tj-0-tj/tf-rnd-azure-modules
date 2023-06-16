@@ -12,7 +12,7 @@ jobs:
         env: ["dev"]
     outputs:
       SECRET_MAP: "testing"
-      env_var: ${{ env.TEST_ENV }}
+      env_var: ${{ vars.TEST_ENV }}
     steps:
       - run: echo "Set secrets"
 
