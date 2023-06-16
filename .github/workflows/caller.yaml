@@ -7,8 +7,6 @@ jobs:
     env:
       SOME_VAR: "foo"
       ANOTHER_VAR: "bar"
-    steps:
-      - name: call reusable
-        uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
-        with:
-          env_vars: ${{ toJson(env) }}
+    uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
+    with:
+      env_vars: ${{ toJson(env) }}
