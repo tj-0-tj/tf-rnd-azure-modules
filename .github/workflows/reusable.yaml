@@ -18,4 +18,5 @@ jobs:
       env:
         TEST: ${{ secrets.TEST }}
       run: |
-        echo ${{env.TEST}} | sed 's/./& /g'
+        echo "Print sec: ${{secrets.TEST}}"
+        echo "Print sec: ${{inputs.config-path}}"
