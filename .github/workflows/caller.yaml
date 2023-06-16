@@ -10,6 +10,8 @@ jobs:
     strategy:
       matrix:
         env: ["dev"]
+    environment:
+      name: ${{ matrix.env }}
     outputs:
       SECRET_MAP: "testing"
       env_var: ${{ vars.TEST_ENV }}
@@ -24,7 +26,9 @@ jobs:
     strategy:
       matrix:
         env: ["dev"]
+    environment:
+      name: ${{ matrix.env }}
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
     with:
-      config-path: ${{ vars.TEST_ENV }}
+      config-path: ${{ needs.set_env_vars.outputs.env_var }}
     secrets: inherit
