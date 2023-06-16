@@ -6,14 +6,16 @@ env:
   ANOTHER_VAR: "bar"
 
 jobs:
+  expose_env_vars:
+    runs-on: ubuntu-latest
+
   call_reusable:
     permissions:
       contents: read
     strategy:
       matrix:
         env: ["dev"]
-
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
     with:
-      env_vars: ${{ secrets.TEST }}
+      config-path: .github/labeler.yml
     secrets: inherit
