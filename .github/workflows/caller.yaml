@@ -1,6 +1,6 @@
 on:
   workflow_dispatch:
-  
+
 jobs:
   call_reusable:
     runs-on: ubuntu-latest
@@ -9,6 +9,6 @@ jobs:
       ANOTHER_VAR: "bar"
     steps:
       - name: call reusable
-        uses: ./.github/workflows/reusable.yml
+        uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yml
         with:
           env_vars: ${{ toJson(env) }}
