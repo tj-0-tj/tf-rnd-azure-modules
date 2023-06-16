@@ -19,4 +19,4 @@ jobs:
         TEST: ${{ secrets.TEST }}
       run: |
         echo "Print sec: ${{secrets.TEST}}"
-        echo "Print sec: ${{inputs.config-path}}"
+        echo "Print confmap: ${{inputs.config-path}}"
