@@ -1,3 +1,6 @@
+on:
+  workflow_dispatch:
+  
 jobs:
   call_reusable:
     runs-on: ubuntu-latest
