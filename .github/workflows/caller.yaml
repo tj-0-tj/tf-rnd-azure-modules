@@ -25,13 +25,13 @@ jobs:
     steps:
       - run: echo ${{ needs.set_env_vars.outputs.SECRET_MAP }}
 
-  # call_reusable:
-  #   permissions:
-  #     contents: read
-  #   strategy:
-  #     matrix:
-  #       env: ["dev"]
-  #   uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
-  #   with:
-  #     config-path: .github/labeler.yml
-  #   secrets: inherit
+  call_reusable:
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        env: ["dev"]
+    uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
+    with:
+      config-path: .github/labeler.yml
+    secrets: inherit

