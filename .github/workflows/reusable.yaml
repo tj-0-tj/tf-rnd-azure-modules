@@ -1,0 +1,20 @@
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      env_vars:
+        required: false
+        default: '{}'
+jobs:
+  the_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set environment variables
+        run: |
+          env_dict=$(echo "${{inputs.env_vars}}" | jq -r 'to_entries|map("export \(.key)=\(.value|tostring)")|.[]')
+          eval "$env_dict"
+
+      - name: Print environment variables
+        run: |
+          echo "SOME_VAR: $SOME_VAR"
+          echo "ANOTHER_VAR: $ANOTHER_VAR"

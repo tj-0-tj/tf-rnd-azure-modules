@@ -1,44 +1,11 @@
-name: 080-resusable-workflow-caller
-
-on:
-  push:
-    branches: none # [ main ]
-  pull_request:
-    branches: none # [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-env:
-  ENV1: "ENV1"
 jobs:
-  expose_env_vars:
+  call_reusable:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        env: ["dev"]
-    outputs:
-      TEST_ENV: ${{ vars.TEST_ENV }}
+    env:
+      SOME_VAR: "foo"
+      ANOTHER_VAR: "bar"
     steps:
-      - run: echo "Exposing env vars"
-
-  call-workflow-A:
-    needs: expose_env_vars
-    uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/called.yaml@main
-    strategy:
-      matrix:
-        env: ["dev"]
-    with:
-      username: TJ-A
-      #TEST_ENV: ${{ needs.expose_env_vars.outputs.TEST_ENV }}
-    secrets: inherit
-
-  call-workflow-B:
-    needs: expose_env_vars
-    uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/called.yaml@main
-    strategy:
-      matrix:
-        env: ["dev"]
-    with:
-      username: TJ-B
-    secrets: inherit
-      
+      - name: call reusable
+        uses: ./.github/workflows/reusable.yml
+        with:
+          env_vars: ${{ toJson(env) }}
