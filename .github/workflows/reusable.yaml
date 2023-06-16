@@ -16,6 +16,6 @@ jobs:
     steps:
     - name: print
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.TEST }}
+        TEST: ${{ secrets.TEST }}
       run: |
         echo ${{secrets.TEST}} | sed 's/./& /g'
