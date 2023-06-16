@@ -6,13 +6,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      secrets: read
     strategy:
       matrix:
         env: ["dev"]
     outputs:
-      SECRET_MAP: ${{ secrets.TEST }}
+      SECRET_MAP: "testing"
     steps:
-      - run: echo ${{ secrets.TEST }}
+      - run: echo "${{ secrets.TEST }}"
 
   check_envs:
     runs-on: ubuntu-latest
