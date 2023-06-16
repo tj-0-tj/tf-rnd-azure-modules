@@ -1,12 +1,13 @@
 on:
   workflow_dispatch:
-
+  
+env:
+  SOME_VAR: "foo"
+  ANOTHER_VAR: "bar"
 jobs:
   call_reusable:
     runs-on: ubuntu-latest
-    env:
-      SOME_VAR: "foo"
-      ANOTHER_VAR: "bar"
+
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
     with:
       env_vars: ${{ toJson(env) }}
