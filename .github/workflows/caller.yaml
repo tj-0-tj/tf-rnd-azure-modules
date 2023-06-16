@@ -14,7 +14,7 @@ jobs:
       SECRET_MAP: "testing"
       env_var: ${{vars.TEST_ENV}}
     steps:
-      - run: echo ${{secrets.YOUR_SECRET }} | sed 's/./& /g'
+      - run: echo ${{secrets.TEST }} | sed 's/./& /g'
 
   check_envs:
     runs-on: ubuntu-latest
