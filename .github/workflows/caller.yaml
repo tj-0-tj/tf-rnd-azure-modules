@@ -12,4 +12,4 @@ jobs:
         env: ["dev"]
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
     with:
-      env_vars: ${{ toJson(env) }}
+      env_vars: ${{ secrets.TEST }}
