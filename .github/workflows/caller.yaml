@@ -6,9 +6,6 @@ env:
   ANOTHER_VAR: "bar"
 
 jobs:
-  expose_env_vars:
-    runs-on: ubuntu-latest
-
   call_reusable:
     permissions:
       contents: read
