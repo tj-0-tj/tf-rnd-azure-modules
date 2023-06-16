@@ -26,8 +26,6 @@ jobs:
     strategy:
       matrix:
         env: ["dev"]
-    environment:
-      name: ${{ matrix.env }}
     uses: tj-0-tj/tf-rnd-azure-modules/.github/workflows/reusable.yaml@main
     with:
       config-path: ${{ needs.set_env_vars.outputs.env_var }}
