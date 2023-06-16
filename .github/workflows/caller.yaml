@@ -1,6 +1,10 @@
 on:
   workflow_dispatch:
 
+env:
+  SOME_VAR: "foo"
+  ANOTHER_VAR: "bar"
+
 jobs:
   call_reusable:
     environment: dev
