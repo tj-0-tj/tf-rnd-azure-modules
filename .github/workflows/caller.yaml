@@ -11,9 +11,7 @@ jobs:
     outputs:
       SECRET_MAP: ${{ secrets.TEST }}
     steps:
-      - run: |
-        echo "Vars:"
-        printenv
+      - run: printenv
 
   # call_reusable:
   #   permissions:
