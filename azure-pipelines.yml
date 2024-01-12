@@ -4,47 +4,20 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+- none
 
 pool:
   vmImage: ubuntu-latest
 jobs:
 - job: A
   steps:
-  - task: TerraformInstaller@0
+  - task: Bash@3
     inputs:
-      terraformVersion: '1.4.2'
-
+      script: | 
+        echo 'hello'
 - job: B
   steps:
-  - task: TerraformCLI@0
+  - task: Bash@3
     inputs:
-      command: 'init'
-      #secureVarsFile: 'secrets.conf'
-      backendType: 'azurerm'
-      backendServiceArm: 'sp-rnd-kv'
-      backendAzureRmSubscriptionId: '7eac40a0-6807-4898-9a66-fbe5bba26ace'
-      ensureBackend: true
-      backendAzureRmResourceGroupName: 'tfstate'
-      backendAzureRmResourceGroupLocation: 'uksouth'
-      backendAzureRmStorageAccountName: 'tfstate31235'
-      backendAzureRmContainerName: 'tfstate'
-      backendAzureRmKey: 'terraform.tfstate'
-      allowTelemetryCollection: false
-
-- job: C
-  steps:
-  - task: TerraformCLI@0
-    inputs:
-      command: 'validate'
-      allowTelemetryCollection: false
-
-- job: D
-  steps:
-  - task: TerraformCLI@0
-    displayName: Terraform plan
-    inputs:
-      command: 'plan'
-      environmentServiceName: 'sp-rnd-kv'
-      allowTelemetryCollection: false
-      commandOptions: ''
+      script: | 
+        echo 'hello B'
