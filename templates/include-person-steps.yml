@@ -3,6 +3,6 @@ parameters:
       type: object
       default: null
 steps:
-- ${{ each person in parameters.PERSONS }}:
   - script: |
-    echo "${{ person.name }} -> ${{ person.age }}"
+    ${{ each person in parameters.PERSONS }}:
+      echo "${{ person.name }} -> ${{ person.age }}"
