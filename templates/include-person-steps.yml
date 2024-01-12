@@ -4,5 +4,5 @@ parameters:
       default: null
 steps:
 - ${{ each person in parameters.PERSONS }}:
-  - script: echo ${{ person.name }} 
-  - script: echo ${{ person.age }}
+  - script: |
+    echo ${{ person.name }} -> ${{ person.age }}
