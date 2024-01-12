@@ -3,7 +3,7 @@ parameters:
       type: object
       default: null
 steps:
-  - task: 
+  - task: Bash@3
     displayName: "Test"
     inputs:
       targetType: inline
