@@ -3,6 +3,13 @@ parameters:
       type: object
       default: null
 steps:
-  - script: |
-    ${{ each person in parameters.PERSONS }}:
-      echo "${{ person.name }} -> ${{ person.age }}"
+  - task: 
+    displayName: "Test"
+    inputs:
+      targetType: inline
+      script: |
+        for item in ${{ parameters.PERSONS }};do
+            echo "${{ person.name }} -> ${{ person.age }}"
+        done
+
+        
