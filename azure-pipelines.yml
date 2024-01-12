@@ -1,23 +1,14 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- none
-
+  - none
 pool:
   vmImage: ubuntu-latest
 jobs:
-- job: A
-  steps:
-  - task: Bash@3
-    inputs:
-      script: | 
-        echo 'hello'
-- job: B
-  steps:
-  - task: Bash@3
-    inputs:
-      script: | 
-        echo 'hello B'
+  - job: Persons
+    steps:
+      - template: ./templates/include-person-steps.yml
+        parameters:
+              PERSONS: 
+                - name: "TJ"
+                  age: 35
+          
+            

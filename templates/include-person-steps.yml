@@ -1,0 +1,8 @@
+parameters:
+    - name : PERSONS 
+      type: object
+      default: null
+steps:
+- ${{ each person in parameters.PERSONS }}:
+  - script: echo ${{ person.Key }} 
+  - script: echo ${{ person.Value }}
