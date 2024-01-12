@@ -5,4 +5,4 @@ parameters:
 steps:
 - ${{ each person in parameters.PERSONS }}:
   - script: |
-    echo ${{ person.name }} -> ${{ person.age }}
+    echo "${{ person.name }} -> ${{ person.age }}"
