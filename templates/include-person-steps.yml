@@ -8,7 +8,7 @@ steps:
     inputs:
       targetType: inline
       script: |
-        for person in ${{ parameters.PERSONS }};do \
+        for person in "${{ parameters.PERSONS }}"; do \
           echo "${{ person.name }} -> ${{ person.age }}" \
         done
 
