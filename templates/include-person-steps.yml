@@ -9,8 +9,6 @@ steps:
       targetType: inline
       script: |
         echo "${{ parameters.PERSONS }}"
-        # for person in ${{ parameters.PERSONS }};do \
-        #     echo "${{ person.name }} -> ${{ person.age }}" \
-        # done
+     
 
         
