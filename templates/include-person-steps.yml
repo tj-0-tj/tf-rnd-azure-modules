@@ -4,7 +4,7 @@ parameters:
       default: null
 steps:
   - ${{ each item in parameters.PERSONS }}:
-     - script: echo '${{ item.name }}=${{ replace(convertToJson(item.age), ':', '=')}}' >> parameters.auto.tfvars
+     - script: echo '${{ item.name }}=${{ replace(convertToJson(item.value), ':', '=')}}' >> parameters.auto.tfvars
        displayName: "JsonVar ${{ item.name }}"
 
   - task: Bash@3
@@ -17,6 +17,6 @@ steps:
         env
     env:
       ${{ each item in parameters.PERSONS }}:
-        ${{ format('TJ_VARS_{0}', item.index) }}: ${{ item.name }}
+        ${{ format('TJ_VARS_{0}', item.name) }}: ${{ item.value }}
             
         

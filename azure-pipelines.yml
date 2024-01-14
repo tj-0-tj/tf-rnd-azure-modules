@@ -9,8 +9,8 @@ jobs:
         parameters:
               PERSONS: 
                 - name: "TJ"
-                  age: 35
+                  value: 35
                 - name: "TJ2"
-                  age: 36
+                  value: 36
           
             
