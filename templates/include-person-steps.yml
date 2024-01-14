@@ -8,7 +8,7 @@ steps:
     inputs:
       targetType: inline
       script: |
-        vars=convertToJson(${{ parameters.PERSONS }})
+        vars=${{ convertToJson(parameters.PERSONS) }})
         echo $vars
         
         
