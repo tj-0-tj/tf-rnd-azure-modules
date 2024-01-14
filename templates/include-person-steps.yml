@@ -17,6 +17,6 @@ steps:
         env
     env:
       ${{ each item in parameters.PERSONS }}:
-        ${{ format('SCRIPT_PARAM_{0}_KEY', item.name) }}: ${{ item.age }}
+        ${{ format('TJ_VARS_{0}', item.index) }}: ${{ item.name }}
             
         
