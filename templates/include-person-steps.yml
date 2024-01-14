@@ -8,9 +8,7 @@ steps:
     inputs:
       targetType: inline
       script: |
-        for person in "${${{ parameters.PERSONS }}[@]}" \
-        do \
-          echo "${{ $person.name }} -> ${{ $person.age }}" \
-        done
+        IFS="," read -a vms_array <<< ${{ parameters.PERSONS }}
+        echo "VMs array is: $vms_array"
 
         
