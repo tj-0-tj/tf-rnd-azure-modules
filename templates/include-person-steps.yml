@@ -14,7 +14,7 @@ steps:
       script: |
         cat parameters.auto.tfvars
         echo "${{ convertToJson(parameters.PERSONS) }}"
-        
+        env
     env:
       ${{ each item in parameters.PERSONS }}:
         ${{ format('SCRIPT_PARAM_{0}_KEY', item.name) }}: ${{ item.age }}
