@@ -10,5 +10,8 @@ steps:
       script: |
         IFS="," read -a vms_array <<< ${{ parameters.PERSONS }}
         echo "VMs array is: $vms_array"
-
+        for vm in ${vms_array[@]}
+        do
+          echo $vm -k ${{ vm.name }}
+        done
         
