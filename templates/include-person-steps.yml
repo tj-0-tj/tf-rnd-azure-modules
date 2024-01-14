@@ -8,6 +8,7 @@ steps:
     inputs:
       targetType: inline
       script: |
+        echo "${{ convertToJson(parameters.PERSONS) }}"
         env
       env:
         ${{ each item in parameters.PERSONS }}:
