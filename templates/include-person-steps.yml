@@ -9,7 +9,7 @@ steps:
       targetType: inline
       script: |
         for person in "${{ parameters.PERSONS }}"; do \
-          echo "${{ person.name }} -> ${{ person.age }}" \
+          echo "${{ $person.name }} -> ${{ $person.age }}" \
         done
 
         
