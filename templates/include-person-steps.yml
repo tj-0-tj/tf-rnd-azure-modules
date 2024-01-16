@@ -22,6 +22,6 @@ steps:
     inputs:
       gitHubConnection:  $(GH-PAT)
       repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
-      #id: # string. ID of the github pr/issue. 
+      id: 3 # string. ID of the github pr/issue. 
       comment: "Testing $(Build.Repository.Name) comment!"      
         
