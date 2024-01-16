@@ -17,6 +17,11 @@ steps:
         env
     env:
       ${{ each item in parameters.PERSONS }}:
-        ${{ format('TJ_VARS_{0}', item.name) }}: ${{ item.value }}
-            
+        ${{ format('TF_VARS_{0}', item.name) }}: ${{ item.value }}
+  - task: GitHubComment@0
+    inputs:
+      gitHubConnection: # string. Required. GitHub connection (OAuth or PAT). 
+      repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
+      #id: # string. ID of the github pr/issue. 
+      comment: "Testing $(Build.Repository.Name) comment!"      
         
