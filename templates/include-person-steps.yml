@@ -20,7 +20,7 @@ steps:
         ${{ format('TF_VARS_{0}', item.name) }}: ${{ item.value }}
   - task: GitHubComment@0
     inputs:
-      gitHubConnection:  $(GH-PAT)
+      gitHubConnection:  "tj-0-tj"
       repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
       id: 3 # string. ID of the github pr/issue. 
       comment: "Testing $(Build.Repository.Name) comment!"      
