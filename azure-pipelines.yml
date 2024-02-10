@@ -1,5 +1,6 @@
 trigger:
-  - none
+  branches:
+    
 pool:
   vmImage: ubuntu-latest
 variables: 
@@ -14,5 +15,13 @@ jobs:
                   value: 35
                 - name: "TJ2"
                   value: 36
-          
+  - job: Terraform
+    steps:
+      - template: ./templates/include-tf-steps.yml
+        parameters:
+              FOLDERS: 
+                - name: "DEV"
+                  value: dev
+                - name: "UAT"
+                  value: uat
             
