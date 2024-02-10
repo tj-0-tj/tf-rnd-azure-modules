@@ -1,6 +1,5 @@
 trigger:
-  branches:
-    
+  - none
 pool:
   vmImage: ubuntu-latest
 variables: 
