@@ -3,14 +3,14 @@ parameters:
       type: object
 
 stages:
-  - ${{ each app in parameters.APPS }}:
-    - stage: ${{ app.name }}
-      dependsOn: []
-      jobs:
-      - ${{ each env in parameters.environments }}:
-        - template: ./templates/include-tf-job.yml   
-          parameters:
-            APP_NAME: ${{ app.name }}  
-            APP_ENV: ${{ env.name }}  
-            APP_FOLDER: ${{ env.folder }} 
+- ${{ each app in parameters.APPS }}:
+  - stage: ${{ app.name }}
+    dependsOn: []
+    jobs:
+    - ${{ each env in parameters.environments }}:
+    - template: ./templates/include-tf-job.yml   
+      parameters:
+        APP_NAME: ${{ app.name }}  
+        APP_ENV: ${{ env.name }}  
+        APP_FOLDER: ${{ env.folder }} 
         
