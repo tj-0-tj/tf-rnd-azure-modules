@@ -9,35 +9,35 @@ jobs:
 - job: ${{ upper(parameters.APP_NAME) }}_${{ upper(parameters.APP_ENV) }}
   displayName: ${{ upper(parameters.APP_NAME) }}_${{ upper(parameters.APP_ENV) }}
   steps:
-  - task: Bash@3
-    displayName: "TF init"
-    inputs:
-      targetType: inline
-      workingDirectory: '${{ parameters.APP_FOLDER}}'
-      script: |
-        terraform init -upgrade -backend-config="backend=local" -backend-config="path=./tf.tfstate" 
+    - task: Bash@3
+      displayName: "TF init"
+      inputs:
+        targetType: inline
+        workingDirectory: '${{ parameters.APP_FOLDER}}'
+        script: |
+          terraform init -upgrade -backend-config="backend=local" -backend-config="path=./tf.tfstate" 
 
-  - task: Bash@3
-    displayName: "TF Plan"
-    inputs:
-      targetType: inline
-      workingDirectory: '${{ parameters.APP_FOLDER}}'
-      script: |
-        terraform plan -input=false -out='${{ parameters.APP_NAME}}_${{ parameters.APP_ENV}}.tfplan'
-        TFSHOW=$(terraform show -no-color -json)
-        echo "##vso[task.setvariable variable=TFSHOW]$TFSHOW"
-        
-  - task: GitHubComment@0
-    inputs:
-      gitHubConnection:  "tj-0-tj"
-      repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
-      # id: 3 # string. ID of the github pr/issue. 
-      comment: "Testing ${{ upper(parameters.APP_NAME)}}_${{ upper(parameters.APP_ENV) }} comment!"      
+    - task: Bash@3
+      displayName: "TF Plan"
+      inputs:
+        targetType: inline
+        workingDirectory: '${{ parameters.APP_FOLDER}}'
+        script: |
+          terraform plan -input=false -out='${{ parameters.APP_NAME}}_${{ parameters.APP_ENV}}.tfplan'
+          TFSHOW=$(terraform show -no-color -json)
+          echo "##vso[task.setvariable variable=TFSHOW]$TFSHOW"
+          
+    - task: GitHubComment@0
+      inputs:
+        gitHubConnection:  "tj-0-tj"
+        repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
+        # id: 3 # string. ID of the github pr/issue. 
+        comment: "Testing ${{ upper(parameters.APP_NAME)}}_${{ upper(parameters.APP_ENV) }} comment!"      
 
 
-  - task: GitHubComment@0
-    inputs:
-      gitHubConnection:  "tj-0-tj"
-      repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
-      # id: 3 # string. ID of the github pr/issue. 
-      comment: "$(TFSHOW)"
+    - task: GitHubComment@0
+      inputs:
+        gitHubConnection:  "tj-0-tj"
+        repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
+        # id: 3 # string. ID of the github pr/issue. 
+        comment: "$(TFSHOW)"
