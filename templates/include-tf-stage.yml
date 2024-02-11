@@ -1,0 +1,15 @@
+parameters:
+    - name : APPS 
+      type: object
+
+stages:
+  - ${{ each app in parameters.APPS }}:
+    - stage: ${{ app.name }}
+      jobs:
+        - ${{ each env in parameters.environments }}:
+          - template: ./templates/include-tf-job.yml   
+            parameters:
+              APP_NAME: ${{ app.name }}  
+              APP_ENV: ${{ env.name }}  
+              APP_FOLDER: ${{ env.folder }} 
+        
