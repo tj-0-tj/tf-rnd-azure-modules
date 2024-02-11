@@ -1,12 +1,12 @@
 parameters:
-    - name : APPS 
-      type: object
+  - name : APPS 
+    type: object
 
 stages:
 - ${{ each app in parameters.APPS }}:
   - stage: ${{ app.name }}
     dependsOn: []
-    - ${{ each env in parameters.environments }}:
+    - ${{ each env in app.environments }}:
       - template: ./templates/include-tf-job.yml   
         parameters:
           APP_NAME: ${{ app.name }}  
