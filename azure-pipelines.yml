@@ -23,9 +23,9 @@ pool:
 variables: 
   - group: GH
 stages:
-  - template: ./templates/include-tf-stage.yml
-    parameters:
-      apps: ${{ parameters.apps }}
+- template: ./templates/include-tf-stage.yml
+  parameters:
+    apps: ${{ parameters.apps }}
 # jobs:
 #   # - job: Persons
 #   #   steps:
