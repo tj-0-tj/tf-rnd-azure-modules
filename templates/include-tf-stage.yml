@@ -5,6 +5,7 @@ parameters:
 stages:
   - ${{ each app in parameters.APPS }}:
     - stage: ${{ app.name }}
+      dependsOn: []
       jobs:
       - ${{ each env in parameters.environments }}:
         - template: ./templates/include-tf-job.yml   
