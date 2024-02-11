@@ -23,7 +23,7 @@ jobs:
       targetType: inline
       workingDirectory: '${{ parameters.APP_FOLDER}}'
       script: |
-        terraform plan -input=false -out ${BUILD_BUILDNUMBER}.tfplan'
+        terraform plan -input=false -out ${BUILD_BUILDNUMBER}.tfplan
         TFSHOW=$(cat '${BUILD_BUILDNUMBER}.tfplan')
         echo "##vso[task.setvariable variable=TFSHOW]$TFSHOW"
 
