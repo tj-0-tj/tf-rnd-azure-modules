@@ -6,8 +6,9 @@ parameters:
     - name : APP_FOLDER 
       type: string
 jobs:
-- job: ${{ upper(parameters.APP_NAME)}}_${{ upper(parameters.APP_ENV) }}
-  displayName: ${{ upper(parameters.APP_NAME)}}_${{ upper(parameters.APP_ENV) }}
+- job: ${{ upper(parameters.APP_NAME) }}_${{ upper(parameters.APP_ENV) }}
+  displayName: ${{ upper(parameters.APP_NAME) }}_${{ upper(parameters.APP_ENV) }}
+  dependsOn: []
   steps:
     - task: Bash@3
       displayName: "TF init"
