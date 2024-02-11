@@ -8,7 +8,7 @@ stages:
     dependsOn: []
     jobs:
     - ${{ each env in app.environments }}:
-      - template: ./templates/include-tf-job.yml   
+      - template: ./include-tf-job.yml   
         parameters:
           APP_NAME: ${{ app.name }}  
           APP_ENV: ${{ env.name }}  
