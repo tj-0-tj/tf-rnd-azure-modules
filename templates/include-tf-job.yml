@@ -23,13 +23,18 @@ jobs:
       targetType: inline
       workingDirectory: '${{ parameters.APP_FOLDER}}'
       script: |
-        terraform plan -input=false -out ${BUILD_BUILDNUMBER}.tfplan
-        TFSHOW=$(cat ${BUILD_BUILDNUMBER}.tfplan)
-        echo "##vso[task.setvariable variable=TFSHOW]$TFSHOW"
+        terraform plan -input=false -detailed-exitcode -out ${BUILD_BUILDNUMBER}.tfplan 
+        retVal=$?
+        if [ $retVal -eq 2 ]; then
+            echo "##vso[task.setvariable variable=planChanged;isOutput=true]true"
+        else
+            echo "##vso[task.setvariable variable=planChanged;isOutput=true]false"
+        fi
+        terraform show 
 
   - task: GitHubComment@0
     inputs:
       gitHubConnection:  "tj-0-tj"
       repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
       # id: 3 # string. ID of the github pr/issue. 
-      comment: "$(TFSHOW)"
+      comment: "$(planChanged)"
