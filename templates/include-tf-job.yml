@@ -23,15 +23,9 @@ jobs:
       targetType: inline
       workingDirectory: '${{ parameters.APP_FOLDER}}'
       script: |
-        terraform plan -input=false -detailed-exitcode -out ${BUILD_BUILDNUMBER}.tfplan 
-        retVal=$?
-        if [ $retVal -eq 2 ]; then
-            echo "##vso[task.setvariable variable=planChanged;isOutput=true]true"
-            TFSHOW=$(terraform show)
-        else
-            echo "##vso[task.setvariable variable=planChanged;isOutput=true]false"
-        fi
-        
+        terraform plan -input=false -json -out ${BUILD_BUILDNUMBER}.tfplan 
+        TFSHOW=$(terraform show ${BUILD_BUILDNUMBER}.tfplan)
+        echo "##vso[task.setvariable variable=TFSHOW]$TFSHOW"
 
   - task: GitHubComment@0
     inputs:
