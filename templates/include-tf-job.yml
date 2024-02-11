@@ -33,4 +33,4 @@ jobs:
       gitHubConnection:  "tj-0-tj"
       repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
       # id: 3 # string. ID of the github pr/issue. 
-      comment: "$(tfplan.TFSHOW)"
+      comment: "This is the plan: $(tfplan.TFSHOW)"
