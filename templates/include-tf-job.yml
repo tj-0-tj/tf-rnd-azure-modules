@@ -27,14 +27,15 @@ jobs:
         retVal=$?
         if [ $retVal -eq 2 ]; then
             echo "##vso[task.setvariable variable=planChanged;isOutput=true]true"
+            TFSHOW=$(terraform show)
         else
             echo "##vso[task.setvariable variable=planChanged;isOutput=true]false"
         fi
-        terraform show 
+        
 
   - task: GitHubComment@0
     inputs:
       gitHubConnection:  "tj-0-tj"
       repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
       # id: 3 # string. ID of the github pr/issue. 
-      comment: "$(planChanged)"
+      comment: "$(TFSHOW)"
