@@ -33,7 +33,8 @@ jobs:
       repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
       id: 3 # string. ID of the github pr/issue. 
       comment: "Testing ${{ upper(parameters.APP_NAME)}}_${{ upper(parameters.APP_ENV) }} comment!"      
-        
+
+ 
   - task: GitHubComment@0
     inputs:
       gitHubConnection:  "tj-0-tj"
