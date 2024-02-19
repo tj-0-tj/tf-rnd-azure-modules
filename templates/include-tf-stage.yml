@@ -14,13 +14,15 @@ stages:
             APP_ENV: ${{ env.name }}  
             APP_FOLDER: ${{ env.folder }} 
       - job: output
-        dependsOn: "APP1_DEV.tfplan"
+        dependsOn: "APP1_DEV"
+        variables:
+          myVarFromJobA: $[ dependencies.APP1_DEV.outputs['tfplan.TFSHOW'] ]
         steps:
         - task: Bash@3
           displayName: "Output"
           inputs:
             targetType: inline
             script: |
-              echo "My output is: $(TFSHOW)"
+              echo "My output is: $(myVarFromJobA)"
 
             
