@@ -4,18 +4,18 @@ parameters:
 
 stages:
 - ${{ each app in parameters.APPS }}:
-  - stage: ${{ app.name }}
+- stage: ${{ app.name }}
+  dependsOn: []
+  jobs:
+  - job: Hello
     dependsOn: []
-    jobs:
-    - job: Hello
-      dependsOn: []
-      steps:
-      - bash: echo "Hello Ubuntu"
+    steps:
+    - bash: echo "Hello Ubuntu"
 
-    - job: Hello2
-      dependsOn: []
-      steps:
-      - bash: echo "Hello Windows"
+  - job: Hello2
+    dependsOn: []
+    steps:
+    - bash: echo "Hello Windows"
   # - ${{ each env in app.environments }}:
   #   - template: ./include-tf-job.yml   
   #     parameters:
