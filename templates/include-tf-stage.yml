@@ -13,13 +13,13 @@ stages:
           APP_NAME: ${{ app.name }}  
           APP_ENV: ${{ env.name }}  
           APP_FOLDER: ${{ env.folder }} 
-    - job: output
-        steps:
-        - task: Bash@3
-          displayName: "Output"
-          inputs:
-            targetType: inline
-            script: |
-              echo "My output is: $(TFSHOW)"
+      - job: output
+          steps:
+          - task: Bash@3
+            displayName: "Output"
+            inputs:
+              targetType: inline
+              script: |
+                echo "My output is: $(TFSHOW)"
 
             
