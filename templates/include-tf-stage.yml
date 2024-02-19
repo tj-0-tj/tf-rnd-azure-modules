@@ -8,10 +8,12 @@ stages:
     dependsOn: []
     jobs:
     - job: Hello
+      dependsOn: []
       steps:
       - bash: echo "Hello Ubuntu"
 
     - job: Hello2
+      dependsOn: []
       steps:
       - bash: echo "Hello Windows"
   # - ${{ each env in app.environments }}:
