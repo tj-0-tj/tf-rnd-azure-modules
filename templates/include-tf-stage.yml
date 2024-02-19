@@ -3,8 +3,8 @@ parameters:
     type: object
 
 stages:
-- ${{ each app in parameters.APPS }}:
-- stage: ${{ app.name }}
+# - ${{ each app in parameters.APPS }}:
+- stage: Test1 #${{ app.name }}
   dependsOn: []
   jobs:
   - job: Hello
