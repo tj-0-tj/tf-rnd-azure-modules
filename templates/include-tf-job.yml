@@ -27,7 +27,7 @@ jobs:
         terraform plan -input=false -json -out ${BUILD_BUILDNUMBER}.tfplan 
         TFSHOW=$(terraform show ${BUILD_BUILDNUMBER}.tfplan)
         echo "##vso[task.setvariable variable=TFSHOW;isOutput=true]$TFSHOW"
-
+        
   - task: GitHubComment@0
     inputs:
       gitHubConnection:  "tj-0-tj"
