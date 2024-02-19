@@ -7,10 +7,17 @@ stages:
   - stage: ${{ app.name }}
     dependsOn: []
     jobs:
-  - ${{ each env in app.environments }}:
-    - template: ./include-tf-job.yml   
-      parameters:
-        APP_NAME: ${{ app.name }}  
-        APP_ENV: ${{ env.name }}  
-        APP_FOLDER: ${{ env.folder }} 
+    - job: Hello
+      steps:
+      - bash: echo "Hello Ubuntu"
+
+    - job: Hello2
+      steps:
+      - bash: echo "Hello Windows"
+  # - ${{ each env in app.environments }}:
+  #   - template: ./include-tf-job.yml   
+  #     parameters:
+  #       APP_NAME: ${{ app.name }}  
+  #       APP_ENV: ${{ env.name }}  
+  #       APP_FOLDER: ${{ env.folder }} 
         
