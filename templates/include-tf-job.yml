@@ -6,32 +6,32 @@ parameters:
   - name : APP_FOLDER 
     type: string
 jobs:
-- job: ${{ upper(parameters.APP_NAME) }}_${{ upper(parameters.APP_ENV) }}
-  displayName: ${{ upper(parameters.APP_NAME) }}_${{ upper(parameters.APP_ENV) }}
-  dependsOn: []
-  steps:
-  - task: Bash@3
-    displayName: "TF init"
-    inputs:
-      targetType: inline
-      workingDirectory: '${{ parameters.APP_FOLDER}}'
-      script: |
-        terraform init -input=false -upgrade -backend-config="backend=local" -backend-config="path=./tf.tfstate" 
+  - job: ${{ upper(parameters.APP_NAME) }}_${{ upper(parameters.APP_ENV) }}
+    displayName: ${{ upper(parameters.APP_NAME) }}_${{ upper(parameters.APP_ENV) }}
+    dependsOn: []
+    steps:
+    - task: Bash@3
+      displayName: "TF init"
+      inputs:
+        targetType: inline
+        workingDirectory: '${{ parameters.APP_FOLDER}}'
+        script: |
+          terraform init -input=false -upgrade -backend-config="backend=local" -backend-config="path=./tf.tfstate" 
 
-  - task: Bash@3
-    displayName: "TF Plan"
-    name: 'tfplan'
-    inputs:
-      targetType: inline
-      workingDirectory: '${{ parameters.APP_FOLDER}}'
-      script: |
-        terraform plan -input=false -json -out ${BUILD_BUILDNUMBER}.tfplan 
-        TFSHOW=$(terraform show ${BUILD_BUILDNUMBER}.tfplan)
-        echo "##vso[task.setvariable variable=TFSHOW;isOutput=true]$TFSHOW"
-        
-  - task: GitHubComment@0
-    inputs:
-      gitHubConnection:  "tj-0-tj"
-      repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
-      # id: 3 # string. ID of the github pr/issue. 
-      comment: "This is the plan: $(tfplan.TFSHOW)"
+    - task: Bash@3
+      displayName: "TF Plan"
+      name: 'tfplan'
+      inputs:
+        targetType: inline
+        workingDirectory: '${{ parameters.APP_FOLDER}}'
+        script: |
+          terraform plan -input=false -json -out ${BUILD_BUILDNUMBER}.tfplan 
+          TFSHOW=$(terraform show ${BUILD_BUILDNUMBER}.tfplan)
+          echo "##vso[task.setvariable variable=TFSHOW;isOutput=true]TestingMyVAR"
+          
+    - task: GitHubComment@0
+      inputs:
+        gitHubConnection:  "tj-0-tj"
+        repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
+        # id: 3 # string. ID of the github pr/issue. 
+        comment: "This is the plan: $(TFSHOW)"
