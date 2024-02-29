@@ -1,5 +1,7 @@
-repositories:
-    - repository: common
-      type: github
-      name: Contoso/CommonTools
-      endpoint: MyContosoServiceConnection 
+resources:
+  repositories:
+  - repository: MyGitHubRepo
+    type: github
+    endpoint: MyGitHubServiceConnection
+    name: MyGitHubOrgOrUser/MyGitHubRepo
+    ref: features/tools
