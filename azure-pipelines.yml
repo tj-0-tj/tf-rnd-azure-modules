@@ -18,8 +18,9 @@ parameters:
           - name: 'uat'
             folder: "./uat"
 
-extends: 
-  template: ./templates/resource.tmpl.yml
+resources: 
+  repositories:
+    - template: ./templates/resource.tmpl.yml
 
 pool:
   vmImage: ubuntu-latest
