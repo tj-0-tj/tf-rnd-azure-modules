@@ -2,3 +2,12 @@ resources:
   repositories:
     - repository: self
       trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+variables: 
+  - group: GH
+stages:
+- template: ./templates/include-tf-stage.yml
+  parameters:
+    apps: ${{ parameters.apps }}

@@ -20,16 +20,9 @@ parameters:
 
 
 extends:
-  template: start.yml
+  template: ./templates/resource.tmpl.yml
 
-pool:
-  vmImage: ubuntu-latest
-variables: 
-  - group: GH
-stages:
-- template: ./templates/include-tf-stage.yml
-  parameters:
-    apps: ${{ parameters.apps }}
+
 # jobs:
 #   # - job: Persons
 #   #   steps:
