@@ -17,7 +17,10 @@ parameters:
             folder: "./dev"
           - name: 'uat'
             folder: "./uat"
-          
+
+extends: 
+  template: ./templates/resource.tmpl.yml
+
 pool:
   vmImage: ubuntu-latest
 variables: 
