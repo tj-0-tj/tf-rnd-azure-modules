@@ -12,7 +12,7 @@ stages:
           parameters:
             APP_NAME: ${{ app.name }}  
             APP_ENV: ${{ env.name }}  
-            APP_FOLDER: ${{ env.folder }} 
+            APP_FOLDER: ${{ env.folder }}
       - job: output
         dependsOn: "APP1_DEV"
         variables:
@@ -23,6 +23,6 @@ stages:
           inputs:
             targetType: inline
             script: |
-              echo "My output is: $(myVarFromJobA)"
+              echo "My output is: stage is: $(System.StageName)"
 
             
