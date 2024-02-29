@@ -1,5 +1,4 @@
-- repository: MyGitHubRepo
-type: github
-endpoint: MyGitHubServiceConnection
-name: MyGitHubOrgOrUser/MyGitHubRepo
-ref: features/tools
+resources:
+  repositories:
+    - repository: self
+      trigger: none

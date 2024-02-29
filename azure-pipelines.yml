@@ -19,10 +19,8 @@ parameters:
             folder: "./uat"
 
 
-resources:
-  repositories:
-    - repository: self
-      trigger: none
+extends:
+  template: start.yml
 
 pool:
   vmImage: ubuntu-latest
