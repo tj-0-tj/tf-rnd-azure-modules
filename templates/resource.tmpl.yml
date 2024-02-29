@@ -1,7 +1,5 @@
-resources:
-  repositories:
-  - repository: MyGitHubRepo
-    type: github
-    endpoint: MyGitHubServiceConnection
-    name: MyGitHubOrgOrUser/MyGitHubRepo
-    ref: features/tools
+- repository: MyGitHubRepo
+type: github
+endpoint: MyGitHubServiceConnection
+name: MyGitHubOrgOrUser/MyGitHubRepo
+ref: features/tools
