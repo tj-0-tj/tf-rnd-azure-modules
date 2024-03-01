@@ -17,29 +17,13 @@ parameters:
             folder: "./dev"
           - name: 'uat'
             folder: "./uat"
+pool:
+  vmImage: ubuntu-latest
+variables: 
+  - group: GH
+stages:
+- template: ./templates/include-tf-stage.yml
+  parameters:
+    apps: ${{ parameters.apps }}
 
-
-extends:
-  template: ./templates/resource.tmpl.yml
-
-
-# jobs:
-#   # - job: Persons
-#   #   steps:
-#   #     - template: ./templates/include-person-steps.yml
-#   #       parameters:
-#   #             PERSONS: 
-#   #               - name: "TJ"
-#   #                 value: 35
-#   #               - name: "TJ2"
-#   #                 value: 36
-#   - job: Terraform
-#     steps:
-#       - template: ./templates/include-tf-stage.yml
-#         parameters:
-#               FOLDERS: 
-#                 - name: "DEV"
-#                   value: dev
-#                 - name: "UAT"
-#                   value: uat
             
