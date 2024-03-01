@@ -16,8 +16,9 @@ stages:
       - job: output
         dependsOn: "APP1_DEV"
         variables:
+          FLAG: $[ dependencies.APP1_DEV.outputs['tfplan.FLAG'] ]
           - name: myVarFromJobA
-            ${{ if eq(dependencies.APP1_DEV.outputs['tfplan.FLAG'], true) }}:
+            ${{ if eq(variables.FLAG, true) }}:
               value: $[ dependencies.APP1_DEV.outputs['tfplan.TFSHOW'] ]
             ${{ else }}:
               value: "===Nothing to print==="
