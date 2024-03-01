@@ -23,6 +23,6 @@ stages:
           inputs:
             targetType: inline
             script: |
-              echo "My output is: stage is: $(System.StageName)"
+              echo "My output is: $(myVarFromJobA) stage is: $(System.StageName)"
 
             
