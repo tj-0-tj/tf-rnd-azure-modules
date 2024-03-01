@@ -1,15 +1,31 @@
 parameters:
-    - name : APPS 
-      type: object
+  - name : APPS 
+    type: object
 
 stages:
-  - ${{ each app in parameters.APPS }}:
-    - stage: ${{ app.name }}
-      jobs:
-        - ${{ each env in parameters.environments }}:
-          - template: ./templates/include-tf-job.yml   
-            parameters:
-              APP_NAME: ${{ app.name }}  
-              APP_ENV: ${{ env.name }}  
-              APP_FOLDER: ${{ env.folder }} 
-        
+- ${{ each app in parameters.APPS }}:
+  - stage: ${{ app.name }}
+    dependsOn: []
+    jobs:
+      - ${{ each env in app.environments }}:
+        - template: ./include-tf-job.yml   
+          parameters:
+            APP_NAME: ${{ app.name }}  
+            APP_ENV: ${{ env.name }}  
+            APP_FOLDER: ${{ env.folder }}
+      - job: output
+        dependsOn: "APP1_DEV"
+        variables:
+        ${{ if eq(dependencies.APP1_DEV.outputs['tfplan.FLAG'], true) }}:
+          myVarFromJobA: $[ dependencies.APP1_DEV.outputs['tfplan.TFSHOW'] ]
+        ${{ else }}:
+          myVarFromJobA: "===Nothing to print==="
+        steps:
+        - task: Bash@3
+          displayName: "Output"
+          inputs:
+            targetType: inline
+            script: |
+              echo "My output is: $(myVarFromJobA) stage is: $(System.StageName)"
+
+            

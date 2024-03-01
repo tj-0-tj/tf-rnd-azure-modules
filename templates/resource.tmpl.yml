@@ -1,0 +1,5 @@
+resources:
+  repositories:
+    - repository: self
+      trigger: none
+
