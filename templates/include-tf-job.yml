@@ -26,8 +26,8 @@ jobs:
         workingDirectory: '${{ parameters.APP_FOLDER}}'
         script: |
           terraform plan -input=false -json -out ${BUILD_BUILDNUMBER}.tfplan 
-          TFSHOW=$(terraform show ${BUILD_BUILDNUMBER}.tfplan)
-          echo "##vso[task.setvariable variable=TFSHOW;isOutput=true]MYPLAN"
+          TFSHOW=$(cat ${BUILD_BUILDNUMBER}.tfplan)
+          echo "##vso[task.setvariable variable=TFSHOW;isOutput=true]TFSHOW"
           
     - task: GitHubComment@0
       inputs:
