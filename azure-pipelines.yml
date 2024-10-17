@@ -1,48 +1,45 @@
 trigger:
-  branches:
-    include:
-      - "main"
+- main
 
-pr:
-  branches:
-    include:
-      - "main"
-parameters:
-  - name: apps
-    type: object
-    default: 
-      - name: 'app1'
-        environments:
-          - name: 'dev'
-            folder: "./dev"
-          - name: 'uat'
-            folder: "./uat"
-          
 pool:
-  vmImage: ubuntu-latest
-variables: 
+  vmImage: 'ubuntu-22.04'
+
+variables:
   - group: GH
-stages:
-  - template: ./templates/include-tf-stage.yml
-    parameters:
-      apps: ${{ parameters.apps }}
-# jobs:
-#   # - job: Persons
-#   #   steps:
-#   #     - template: ./templates/include-person-steps.yml
-#   #       parameters:
-#   #             PERSONS: 
-#   #               - name: "TJ"
-#   #                 value: 35
-#   #               - name: "TJ2"
-#   #                 value: 36
-#   - job: Terraform
-#     steps:
-#       - template: ./templates/include-tf-stage.yml
-#         parameters:
-#               FOLDERS: 
-#                 - name: "DEV"
-#                   value: dev
-#                 - name: "UAT"
-#                   value: uat
-            
+  - name: organizationName
+    value: 'tj0798'
+  - name: publisherId
+    value: 'ClarityAISolutions'        # Publisher ID from Azure DevOps marketplace
+  - name: extensionId
+    value: 'terraform-summary-pr-commenter-task' # Your extension ID
+  - name: adoPat
+    value: $(ADO_PERSONAL_ACCESS_TOKEN)     # Store your ADO PAT as a secret in the pipeline
+
+
+steps:
+
+# Step 1: Install Node.js (to use a script for version bumping)
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.1'                    # Ensure Node.js 18 is used
+  displayName: 'Use Node.js 20.1'
+
+# Step 2: Install dependencies (npm packages)
+- script: | 
+    ls -alh 
+    npm install
+  displayName: 'Install npm dependencies'
+    
+- task: terraform-summary-pr-commenter@1
+  inputs:
+    ADO_STAGE_NAME: 'Test Stage pipeline'
+    GITHUB_TOKEN: '$(GH-PAT)'  # Secure variable from pipeline secrets
+    TERRAFORM_PLAN_PATH: './terraform-summary-pr-commenter-task/terraform-plan.json'
+    GITHUB_OWNER: tj-0-tj
+    GITHUB_REPO: tf-rnd-azure-modules
+    GITHUB_ISSUE_NUMBER: '5'
+    ADO_JOB_NAME: AIPL_PIPELINE_CTL_FCT1
+    ADO_JOB_LINK: '#joblink'
+    ADO_STAGE_LINK: '#stagelink'
+    ENVIRONMENT: "DEV"
+  displayName: 'Run Custom Task'
