@@ -29,7 +29,7 @@ steps:
     ls -alh 
   displayName: 'Install npm dependencies'
     
-- task: terraform-summary-pr-commenter@1
+- task: terraform-summary-pr-commenter@0
   inputs:
     ADO_STAGE_NAME: 'Test Stage pipeline'
     GITHUB_TOKEN: '$(GH-PAT)'  # Secure variable from pipeline secrets
